@@ -17,8 +17,11 @@ import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
+import androidx.compose.material3.ElevatedButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -49,34 +52,47 @@ import java.nio.charset.StandardCharsets
 
 @Composable
 fun StyledTextField(viewModel: MainSearchModel) {
-
     var value by remember { mutableStateOf("") }
 
     val searchQuery by remember { viewModel.searchQuery }
 
     TextField(
         value = value,
-        onValueChange = { newValue:String ->
+        onValueChange = { newValue ->
             value = newValue
         },
-        //label = { Text("MangaNelo") },
+        label = { Text("Search Manga") },
+        placeholder = { Text("Type a title...") },
         maxLines = 1,
-        textStyle = TextStyle(color = Color.Blue, fontWeight = FontWeight.Bold),
+        singleLine = true,
+        textStyle = MaterialTheme.typography.bodyLarge,
         modifier = Modifier
-            .padding(20.dp),
+            .fillMaxWidth()
+            .padding(horizontal = 16.dp, vertical = 8.dp),
         keyboardOptions = KeyboardOptions.Default.copy(
-            imeAction = ImeAction.Done
+            imeAction = ImeAction.Search
         ),
         keyboardActions = KeyboardActions(
-            onDone = {
+            onSearch = {
                 if (value.isNotBlank()) {
                     viewModel.fetchMangasSearch(value)
                 }
-                //LocalSoftwareKeyboardController.current?.hide()
             }
+        ),
+        colors = TextFieldDefaults.colors(
+            focusedContainerColor = MaterialTheme.colorScheme.surface,
+            unfocusedContainerColor = MaterialTheme.colorScheme.surface,
+            focusedIndicatorColor = MaterialTheme.colorScheme.primary,
+            unfocusedIndicatorColor = MaterialTheme.colorScheme.outline,
+            cursorColor = MaterialTheme.colorScheme.primary,
+            focusedTextColor = MaterialTheme.colorScheme.onSurface,
+            unfocusedTextColor = MaterialTheme.colorScheme.onSurface,
+            focusedLabelColor = MaterialTheme.colorScheme.primary,
+            unfocusedLabelColor = MaterialTheme.colorScheme.onSurfaceVariant
         )
     )
 }
+
 
 @OptIn(ExperimentalCoilApi::class)
 @RequiresApi(Build.VERSION_CODES.O)
@@ -103,7 +119,7 @@ fun MangaNelo(
     Column {
         Row (
             modifier = Modifier
-                .background(color = Color.White)
+                .background(MaterialTheme.colorScheme.surface)
                 .fillMaxWidth()
                 .padding(  25.dp),
             Arrangement.Center
@@ -117,7 +133,9 @@ fun MangaNelo(
                         modifier = Modifier
                             .padding(top = 40.dp)
                             ,
-                        text = "Mangabat"
+                        text = "Mangabat",
+                        style = MaterialTheme.typography.headlineSmall,
+                        color = MaterialTheme.colorScheme.primary
                     )
 
                     StyledTextField(viewModel)
@@ -126,13 +144,13 @@ fun MangaNelo(
 
 
                 Row {
-                    Button(
+                    ElevatedButton(
                         onClick = {
                             viewModel.fetchPopular()
                         }) {
                         Text("Popular Manga")
                     }
-                    Button(
+                    ElevatedButton(
                         onClick = {
                             viewModel.fetchLatest()
                         }) {

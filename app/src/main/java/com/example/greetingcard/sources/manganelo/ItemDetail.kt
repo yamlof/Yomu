@@ -18,6 +18,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedButton
@@ -113,15 +114,16 @@ fun ItemDetail(
         }
 
         OutlinedCard(
-            colors = CardDefaults.cardColors(
-                containerColor = MaterialTheme.colorScheme.surface,
+            colors = CardDefaults.outlinedCardColors(
+                containerColor = MaterialTheme.colorScheme.surfaceVariant,
+                contentColor = MaterialTheme.colorScheme.onSurfaceVariant
             ),
-            border = BorderStroke(1.dp, Color.Black),
+            border = BorderStroke(1.dp, MaterialTheme.colorScheme.outline),
             modifier = Modifier
                 .height(height = 280.dp)
                 .fillMaxWidth()
                 .padding(top = 25.dp),
-            shape = RectangleShape
+            shape = MaterialTheme.shapes.medium
         ) {
             val description = "Sunny"
             Row (
@@ -160,7 +162,7 @@ fun ItemDetail(
 
                 Column(
                     modifier = Modifier
-                        .background(Color.White)
+                        .background(MaterialTheme.colorScheme.background)
                         .fillMaxHeight()
                         .fillMaxWidth() // Ensure the column takes the full width
                         .padding(start = 0.dp),
@@ -169,21 +171,24 @@ fun ItemDetail(
                 ) {
                     Text(
                         text = fetchedTitle.value ?: "Loading title...",
+                        style = MaterialTheme.typography.titleLarge,
                         modifier = Modifier.fillMaxWidth(),
                         textAlign = TextAlign.Center,
-                        color = Color.Black
+                        color = MaterialTheme.colorScheme.onBackground
                     )
                     Text(
                         text = fetchedAuthor.value ?: "Loading author...",
+                        style = MaterialTheme.typography.bodyMedium,
                         modifier = Modifier.fillMaxWidth(),
                         textAlign = TextAlign.Center,
-                        color = Color.Black
+                        color = MaterialTheme.colorScheme.onBackground
                     )
                     Text(
                         text = fetchedStatus.value ?: "Loading status...",
+                        style = MaterialTheme.typography.bodyMedium,
                         modifier = Modifier.fillMaxWidth(),
                         textAlign = TextAlign.Center,
-                        color = Color.Black
+                        color = MaterialTheme.colorScheme.onBackground
                     )
 
                     val newManga = Manga(
@@ -206,11 +211,15 @@ fun ItemDetail(
                                 viewModel.addManga(newManga)
                             }
                         },
-                        modifier = Modifier.padding(top = 25.dp)
+                        modifier = Modifier.padding(top = 25.dp),
+                        colors = ButtonDefaults.elevatedButtonColors(
+                            containerColor = MaterialTheme.colorScheme.primary
+                        )
                     ) {
                         Text(
                             if (isInLibrary) "Remove from Library" else "Add to Library",
-                            textAlign = TextAlign.Center
+                            textAlign = TextAlign.Center,
+                            color = MaterialTheme.colorScheme.onPrimary
                         )
                     }
                 }
@@ -236,13 +245,13 @@ fun ItemDetail(
                         .clickable {
                             navController.navigate("chapter/$encodedChapterUrl")
                         },
-                    shape = RectangleShape,
-                    colors = CardDefaults.cardColors(Color(0xFFA4C2D7)),
+                    shape = MaterialTheme.shapes.small,
+                    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primaryContainer),
                 ) {
                     Text(
                         text = chapterName ?: "Loading Title",
                         style = MaterialTheme.typography.titleMedium,
-                        color = Color.White
+                        color = MaterialTheme.colorScheme.onPrimaryContainer
                     )
                 }
             }

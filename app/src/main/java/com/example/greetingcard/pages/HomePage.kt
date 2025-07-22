@@ -24,6 +24,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.BasicAlertDialog
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -108,7 +109,7 @@ fun HomePage(
                 Row (modifier = modifier
                     .fillMaxWidth()
                     .clip(shape = RoundedCornerShape(2.dp))
-                    .background(Color.Black)
+                    .background(MaterialTheme.colorScheme.primary)
                     .height(75.dp),
                 ){
 
@@ -188,6 +189,9 @@ fun ImageCard(
             .fillMaxWidth()
             .clickable(onClick = onClick),
         shape = RoundedCornerShape(15.dp),
+        colors = CardDefaults.cardColors(
+            contentColor = MaterialTheme.colorScheme.surface
+        )
     ){
         Box(modifier = Modifier.height(250.dp)) {
             Image(

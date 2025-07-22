@@ -14,6 +14,9 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.material3.*
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -22,6 +25,8 @@ import com.example.greetingcard.database.MangaViewModel
 import com.example.greetingcard.pages.HomePage
 import com.example.greetingcard.pages.MySettingsScreen
 import com.example.greetingcard.pages.NotificationPage
+import com.example.greetingcard.settings.SettingsViewModel
+import com.example.greetingcard.settings.SettingsViewModelFactory
 import com.example.greetingcard.sources.manganelo.ChapterReader
 import com.example.greetingcard.sources.manganelo.ItemDetail
 import com.example.greetingcard.sources.manganelo.MangaNelo
@@ -65,6 +70,7 @@ import com.example.greetingcard.sources.manganelo.MangaNelo
                 }
             }
         ) { innerPadding ->
+
             NavHost(
                 navController = navController,
                 startDestination = "home",
@@ -72,7 +78,15 @@ import com.example.greetingcard.sources.manganelo.MangaNelo
             ) {
                 composable("home") { HomePage(navController = navController,mangaViewModel = mangaViewModel) }
                 composable("notifications") { NotificationPage(navController = navController) }
-                composable("settings") { MySettingsScreen() }
+                composable("settings") { backStackEntry ->
+                    val context = LocalContext.current.applicationContext
+                    val settingsViewModel: SettingsViewModel = viewModel(
+                        key = "settingsViewModel",  // optional but recommended for multiple instances
+                        factory = SettingsViewModelFactory(context)
+                    )
+
+                    MySettingsScreen(viewModel = settingsViewModel)
+                }
 
                 composable("itemDetail/{manga_url}"){ navBackStackEntry ->
                     val itemName = navBackStackEntry.arguments?.getString("manga_url")
@@ -141,7 +155,10 @@ import com.example.greetingcard.sources.manganelo.MangaNelo
         currentRoute: String?,
         onItemSelected: (String) -> Unit
     ) {
-        NavigationBar {
+        NavigationBar (
+            contentColor = MaterialTheme.colorScheme.surface,
+            tonalElevation = 4.dp
+        ){
             navItems.forEach { navItem ->
                 NavigationBarItem(
                     selected = currentRoute == navItem.route,
@@ -149,15 +166,34 @@ import com.example.greetingcard.sources.manganelo.MangaNelo
                     icon = {
                         BadgedBox(badge = {
                             if (navItem.badgeCount > 0) {
-                                Badge {
+                                Badge(
+                                    containerColor = MaterialTheme.colorScheme.error
+                                ) {
                                     Text(navItem.badgeCount.toString())
                                 }
                             }
                         }) {
-                            Icon(imageVector = navItem.icon, contentDescription = navItem.label)
+                            Icon(
+                                imageVector = navItem.icon,
+                                contentDescription = navItem.label,
+                                tint = if (currentRoute == navItem.route)
+                                    MaterialTheme.colorScheme.primary
+                                else
+                                    MaterialTheme.colorScheme.onSurfaceVariant
+                            )
                         }
                     },
-                    label = { Text(text = navItem.label) }
+                    label = {
+                        Text(
+                            text = navItem.label,
+                            style = MaterialTheme.typography.labelMedium,
+                            color = if (currentRoute == navItem.route)
+                                MaterialTheme.colorScheme.primary
+                            else
+                            MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                    },
+                    alwaysShowLabel = true
                 )
             }
         }

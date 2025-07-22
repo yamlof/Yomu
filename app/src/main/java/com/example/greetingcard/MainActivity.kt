@@ -17,6 +17,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.room.util.TableInfo
 import com.example.greetingcard.database.AppDatabase
 import com.example.greetingcard.database.MangaRepository
@@ -24,6 +25,7 @@ import com.example.greetingcard.database.MangaViewModel
 import com.example.greetingcard.database.MangaViewModelFactory
 import com.example.greetingcard.pages.MySettingsScreen
 import com.example.greetingcard.settings.SettingsViewModel
+import com.example.greetingcard.settings.SettingsViewModelFactory
 import com.example.greetingcard.ui.theme.AppTheme
 import dagger.hilt.android.AndroidEntryPoint
 import okhttp3.Call
@@ -44,15 +46,19 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
 
         setContent {
+            val settingsViewModel: SettingsViewModel = viewModel(
+                factory = SettingsViewModelFactory(applicationContext)
+            )
             val isDarkMode = settingsViewModel.isDarkMode.collectAsState()
 
             AppTheme(darkTheme = isDarkMode.value) {
 
                 val mangaDao = AppDatabase.getDatabase(application).mangaDao()
                 val mangaRepository = MangaRepository(mangaDao)
-                val mangaViewModelFactory = MangaViewModelFactory(mangaRepository)
-                mangaViewModel = ViewModelProvider(this@MainActivity, mangaViewModelFactory)
-                    .get(MangaViewModel::class.java)
+                val mangaViewModel: MangaViewModel = viewModel(
+                    factory = MangaViewModelFactory(mangaRepository)
+                )
+
 
                 // Wrap in a single composable:
                 Surface(

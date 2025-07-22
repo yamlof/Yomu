@@ -100,6 +100,8 @@ dependencies {
     implementation("io.ktor:ktor-client-android:2.3.7")
     implementation("androidx.preference:preference-ktx:1.2.0")
     implementation("androidx.hilt:hilt-navigation-compose:1.1.0")
+
+    implementation("androidx.datastore:datastore-preferences:1.1.7")
 }
 
 
