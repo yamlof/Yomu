@@ -5,6 +5,8 @@ import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -12,6 +14,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -41,6 +44,7 @@ fun NotificationPage(
 
     var notificationText by remember { mutableStateOf("Loading...") }
 
+
     LaunchedEffect(Unit) {
         try {
             Log.d("KtorClient", "Attempting to fetch hello message...")
@@ -53,59 +57,68 @@ fun NotificationPage(
         }
     }
 
-            LazyColumn {
-                item {
-                    Text(
-                        text = "",
-                        fontSize = 40.sp,
-                        fontWeight = FontWeight.SemiBold,
-                        color = MaterialTheme.colorScheme.primary
-                    )
-                }
-                item {
-                    Row (
-                        Modifier
-                            .background(color = MaterialTheme.colorScheme.background)
-                            .padding(start = 25.dp)
-                            .height(50.dp)
-                            .fillMaxWidth(),
-                        verticalAlignment = Alignment.CenterVertically,
+    Scaffold(
+        //topBar = {
+          //  SmallTopAppBarExample(
+          //      "Sources"
+            //)
+        //}
+    ) { innerPadding ->
+        LazyColumn(
+            contentPadding = PaddingValues(
+                top = innerPadding.calculateTopPadding() + 16.dp,
+                bottom = innerPadding.calculateBottomPadding()
+            )
+        ) {
+
+            item {
+                Row (
+                    Modifier
+                        .background(color = MaterialTheme.colorScheme.background)
+                        .padding(start = 25.dp)
+                        .height(50.dp)
+                        .fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically,
 
                     ){
 
-                        val imageUrl = "https://www.mangabats.com/images/favicon-bat.webp"
+                    val imageUrl = "https://www.mangabats.com/images/favicon-bat.webp"
 
-                        Text(
-                            text = "01"
-                        )
+                    Text(
+                        text = "01"
+                    )
 
-                        AsyncImage(
-                            model = imageUrl,
-                            contentDescription = "Translated description of what the image contains",
-                            modifier
-                                .padding(horizontal = 25.dp)
-                                .height(25.dp)
-                                .width(25.dp)
-                        )
+                    AsyncImage(
+                        model = imageUrl,
+                        contentDescription = "Translated description of what the image contains",
+                        modifier
+                            .padding(horizontal = 25.dp)
+                            .height(25.dp)
+                            .width(25.dp)
+                    )
 
-                        Text(
-                            text = "MangaBat",
-                            modifier = Modifier
-                                .clickable {
+                    Text(
+                        text = "MangaBat",
+                        modifier = Modifier
+                            .clickable {
 
-                                    notificationText = ""
+                                notificationText = ""
 
-                                    navController.navigate("detail/Manganelo")
-                                }
-                            /*fontSize = 40.sp,
-                            fontWeight = FontWeight.SemiBold,
-                            color = Color.White*/
-                        )
-
-                    }
+                                navController.navigate("detail/Manganelo")
+                            }
+                        /*fontSize = 40.sp,
+                        fontWeight = FontWeight.SemiBold,
+                        color = Color.White*/
+                    )
 
                 }
+
             }
+        }
+
+    }
+
+
 
 }
 

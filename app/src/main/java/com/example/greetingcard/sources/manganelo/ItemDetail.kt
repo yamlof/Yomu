@@ -115,7 +115,7 @@ fun ItemDetail(
 
         OutlinedCard(
             colors = CardDefaults.outlinedCardColors(
-                containerColor = MaterialTheme.colorScheme.surfaceVariant,
+                containerColor = MaterialTheme.colorScheme.background,
                 contentColor = MaterialTheme.colorScheme.onSurfaceVariant
             ),
             border = BorderStroke(1.dp, MaterialTheme.colorScheme.outline),
@@ -164,9 +164,9 @@ fun ItemDetail(
                     modifier = Modifier
                         .background(MaterialTheme.colorScheme.background)
                         .fillMaxHeight()
-                        .fillMaxWidth() // Ensure the column takes the full width
+                        .fillMaxWidth()
                         .padding(start = 0.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally, // Center items horizontally
+                    horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.Center
                 ) {
                     Text(
@@ -245,8 +245,8 @@ fun ItemDetail(
                         .clickable {
                             navController.navigate("chapter/$encodedChapterUrl")
                         },
-                    shape = MaterialTheme.shapes.small,
-                    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primaryContainer),
+                    //shape = MaterialTheme.shapes.small,
+                    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.background),
                 ) {
                     Text(
                         text = chapterName ?: "Loading Title",
@@ -255,9 +255,7 @@ fun ItemDetail(
                     )
                 }
             }
-            item {
-                Text(text = "Last item")
-            }
+
         }
     }
 }

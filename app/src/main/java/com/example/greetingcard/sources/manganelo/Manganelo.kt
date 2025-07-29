@@ -165,7 +165,7 @@ fun MangaNelo(
             columns = GridCells.Fixed(2),
             contentPadding = PaddingValues(16.dp),
             modifier = Modifier
-                .padding(bottom = 90.dp)
+                //.padding(bottom = 90.dp)
         ) {
             items(mangas) { item ->
 

@@ -63,13 +63,15 @@ import com.example.greetingcard.sources.manganelo.ItemDetail
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SmallTopAppBarExample() {
+fun SmallTopAppBarExample(
+    title: String
+) {
     Scaffold(
         topBar = {
             TopAppBar(
                 colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.primaryContainer,
-                    titleContentColor = MaterialTheme.colorScheme.primary,
+                    containerColor = MaterialTheme.colorScheme.primary,
+                    titleContentColor = MaterialTheme.colorScheme.onPrimary,
                 ),
                 title = {
                     Box(
@@ -78,8 +80,8 @@ fun SmallTopAppBarExample() {
                         contentAlignment = Alignment.Center
                     ) {
                         Text(
-                            text = "Library",
-                            color = MaterialTheme.colorScheme.primary
+                            text = title,
+                            color = MaterialTheme.colorScheme.onPrimary
                         )
                     }
                 }
@@ -99,9 +101,6 @@ fun HomePage(
     navController: NavHostController
 ) {
 
-    //val navController = rememberNavController()
-
-
             Column (
                 modifier = Modifier
                     .padding(bottom = 75.dp, top = 25.dp)
@@ -113,13 +112,8 @@ fun HomePage(
                     .height(75.dp),
                 ){
 
-                    SmallTopAppBarExample()
-                    /*Text(
-                        text = "Library",
-                        fontSize = 40.sp,
-                        fontWeight = FontWeight.SemiBold,
-                        color = Color.White
-                    ) */
+                    SmallTopAppBarExample("Library")
+
                 }
 
 

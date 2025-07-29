@@ -81,7 +81,7 @@ import com.example.greetingcard.sources.manganelo.MangaNelo
                 composable("settings") { backStackEntry ->
                     val context = LocalContext.current.applicationContext
                     val settingsViewModel: SettingsViewModel = viewModel(
-                        key = "settingsViewModel",  // optional but recommended for multiple instances
+                        key = "settingsViewModel",
                         factory = SettingsViewModelFactory(context)
                     )
 
