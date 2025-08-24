@@ -56,7 +56,6 @@ fun NotificationPage(
             notificationText = "Error: ${e.message}"
         }
     }
-
     Scaffold(
         //topBar = {
           //  SmallTopAppBarExample(

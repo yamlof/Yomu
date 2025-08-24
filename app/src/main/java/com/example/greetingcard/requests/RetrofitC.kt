@@ -30,8 +30,12 @@ import javax.net.ssl.X509TrustManager
 object RetrofitClient {
     private val client = OkHttpClient.Builder().build()
 
+    val homeUrl = "http://10.0.2.2:5000/manga/"
+
+    val serverUrl = "https://manga-sp-faecffgcasbjgdcp.switzerlandnorth-01.azurewebsites.net/manga/"
+
     private val retrofit = Retrofit.Builder()
-        .baseUrl("https://manga-sp.onrender.com")
+        .baseUrl(serverUrl)
         .addConverterFactory(GsonConverterFactory.create())
         .client(client)
         .build()

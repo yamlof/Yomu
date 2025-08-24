@@ -142,7 +142,7 @@ import com.example.greetingcard.sources.manganelo.MangaNelo
                     )
                 }
             } else {
-                {} // 👈 empty lambda instead of null to avoid space reservation
+                {}
             },
             content = content
         )

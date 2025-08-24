@@ -103,7 +103,7 @@ fun HomePage(
 
             Column (
                 modifier = Modifier
-                    .padding(bottom = 75.dp, top = 25.dp)
+                    .padding(bottom = 0.dp, top = 25.dp)
             ){
                 Row (modifier = modifier
                     .fillMaxWidth()
@@ -124,7 +124,7 @@ fun HomePage(
                     columns = GridCells.Fixed(2),
                     contentPadding = PaddingValues(16.dp),
                     modifier = Modifier
-                        .padding(bottom = 90.dp)
+                        .padding(bottom = 0.dp)
                 ) {
                     items(allMangas) { manga ->
 

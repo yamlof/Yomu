@@ -24,6 +24,7 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedCard
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -38,6 +39,7 @@ import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import coil.annotation.ExperimentalCoilApi
@@ -98,7 +100,7 @@ fun ItemDetail(
                 onDismissRequest = {showErrorDialog.value=false},
                 confirmButton = {
                     TextButton(onClick = {
-                        retryTrigger.value++ // Triggers fetch again
+                        retryTrigger.value++
                     }) {
                         Text("Retry")
                     }
@@ -113,17 +115,14 @@ fun ItemDetail(
             )
         }
 
-        OutlinedCard(
-            colors = CardDefaults.outlinedCardColors(
-                containerColor = MaterialTheme.colorScheme.background,
-                contentColor = MaterialTheme.colorScheme.onSurfaceVariant
-            ),
-            border = BorderStroke(1.dp, MaterialTheme.colorScheme.outline),
+        Surface (
+            color = MaterialTheme.colorScheme.background,
+            //border = BorderStroke(0.dp, MaterialTheme.colorScheme.outline),
             modifier = Modifier
                 .height(height = 280.dp)
                 .fillMaxWidth()
                 .padding(top = 25.dp),
-            shape = MaterialTheme.shapes.medium
+            //shape = MaterialTheme.shapes.medium
         ) {
             val description = "Sunny"
             Row (
@@ -143,7 +142,7 @@ fun ItemDetail(
                         "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36"
                     )
                     .addHeader("Referer", "https://www.mangabats.com/")
-                    .removeHeader("Connection") // Let OkHttp handle this
+                    .removeHeader("Connection")
                     .build()
 
                 val painter = rememberImagePainter(imageRequest)
@@ -233,8 +232,8 @@ fun ItemDetail(
         ){
             items(fetchedChapters.value) { item ->
 
-                val chapterName = item.chapterTitle
-                val chapterLink = item.chapterLink
+                val chapterName = item.title
+                val chapterLink = item.url
 
                 val encodedChapterUrl = Uri.encode(chapterLink)
 

@@ -329,7 +329,6 @@ fun EnhancedImageViewer(
         ReadingMode.WEBTOON -> {
             val listState = rememberLazyListState()
 
-            // Track current visible item for page numbering
             LaunchedEffect(listState) {
                 snapshotFlow { listState.firstVisibleItemIndex }
                     .collect { index ->
@@ -426,7 +425,6 @@ fun WebtoonImage(
                 if (loadedBitmap != null) {
                     bitmap.value = loadedBitmap
 
-                    // Calculate proper height for webtoon display
                     with(density) {
                         val aspectRatio = loadedBitmap.height.toFloat() / loadedBitmap.width.toFloat()
                         imageHeight.value = screenWidth * aspectRatio
@@ -507,7 +505,7 @@ fun WebtoonImage(
                     bitmap = bitmap.value!!.asImageBitmap(),
                     contentDescription = imageManga.imgTitle,
                     modifier = Modifier.fillMaxSize(),
-                    contentScale = ContentScale.FillWidth // This ensures the image fills the width and maintains aspect ratio
+                    contentScale = ContentScale.FillWidth
                 )
             }
         }
@@ -619,8 +617,7 @@ fun ChapterReader(
                         onPageChange = { page -> currentPage.intValue = page },
                         onImageClick = { isUIVisible.value = !isUIVisible.value },
                         onImageDoubleTap = {
-                            // Handle double tap to zoom functionality
-                            // This would typically trigger zoom in the DisplayImage component
+
                         },
                         modifier = Modifier.fillMaxSize()
                     )
@@ -685,7 +682,7 @@ fun ChapterReader(
                                             Button(
                                                 onClick = {
                                                     settings.value = settings.value.copy(readingMode = mode)
-                                                    showSettings.value = false // Close settings after selection
+                                                    showSettings.value = false
                                                 },
                                                 colors = ButtonDefaults.buttonColors(
                                                     containerColor = if (isSelected) MaterialTheme.colorScheme.primary

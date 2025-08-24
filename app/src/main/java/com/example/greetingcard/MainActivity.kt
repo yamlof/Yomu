@@ -19,6 +19,7 @@ import androidx.compose.ui.Modifier
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.room.util.TableInfo
+import com.example.compose.AppTheme
 import com.example.greetingcard.database.AppDatabase
 import com.example.greetingcard.database.MangaRepository
 import com.example.greetingcard.database.MangaViewModel
@@ -26,7 +27,6 @@ import com.example.greetingcard.database.MangaViewModelFactory
 import com.example.greetingcard.pages.MySettingsScreen
 import com.example.greetingcard.settings.SettingsViewModel
 import com.example.greetingcard.settings.SettingsViewModelFactory
-import com.example.greetingcard.ui.theme.AppTheme
 import dagger.hilt.android.AndroidEntryPoint
 import okhttp3.Call
 import okhttp3.OkHttpClient
@@ -60,15 +60,12 @@ class MainActivity : ComponentActivity() {
                 )
 
 
-                // Wrap in a single composable:
+
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    // Compose your screens inside here — conditionally or via Navigation
                     MainScreen(mangaViewModel = mangaViewModel)
-                    // If using settings screen as a separate screen, navigate to it properly
-                    // MySettingsScreen(viewModel = settingsViewModel)
                 }
             }
         }
