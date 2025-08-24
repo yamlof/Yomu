@@ -23,9 +23,11 @@
   </p>
 </div>  
 
-![Screenshot From 2025-08-24 03-08-53.png](docs/Screenshot From 2025-08-24 03-08-53.png)
-![Screenshot From 2025-08-24 03-06-06.png](docs/Screenshot From 2025-08-24 03-06-06.png)
-![Screenshot From 2025-08-24 03-20-14.png](docs/Screenshot From 2025-08-24 03-20-14.png)
+<p align="center">
+  <img src="docs/Screenshot From 2025-08-24 03-08-53.png" width="250"/>
+  <img src="docs/Screenshot From 2025-08-24 03-06-06.png" width="250"/>
+  <img src="docs/Screenshot From 2025-08-24 03-20-14.png" width="250"/>
+</p>
 
 <!-- ROADMAP -->
 ## Roadmap
