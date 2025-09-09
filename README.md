@@ -1,48 +1,50 @@
-This is a Kotlin Multiplatform project targeting Android, iOS, Desktop (JVM).
 
-* [/composeApp](./composeApp/src) is for code that will be shared across your Compose Multiplatform applications.
-  It contains several subfolders:
-  - [commonMain](./composeApp/src/commonMain/kotlin) is for code that’s common for all targets.
-  - Other folders are for Kotlin code that will be compiled for only the platform indicated in the folder name.
-    For example, if you want to use Apple’s CoreCrypto for the iOS part of your Kotlin app,
-    the [iosMain](./composeApp/src/iosMain/kotlin) folder would be the right place for such calls.
-    Similarly, if you want to edit the Desktop (JVM) specific part, the [jvmMain](./composeApp/src/jvmMain/kotlin)
-    folder is the appropriate location.
 
-* [/iosApp](./iosApp/iosApp) contains iOS applications. Even if you’re sharing your UI with Compose Multiplatform,
-  you need this entry point for your iOS app. This is also where you should add SwiftUI code for your project.
+<!-- PROJECT LOGO -->
+<br />
+<div align="center">
+  <a href="https://github.com/othneildrew/Best-README-Template">
+    <img src="app/src/main/res/mipmap-hdpi/ic_launcher.webp" alt="Logo" width="80" height="80">
+  </a>
 
-### Build and Run Android Application
+<h3 align="center">Yomu App</h3>
 
-To build and run the development version of the Android app, use the run configuration from the run widget
-in your IDE’s toolbar or build it directly from the terminal:
-- on macOS/Linux
-  ```shell
-  ./gradlew :composeApp:assembleDebug
-  ```
-- on Windows
-  ```shell
-  .\gradlew.bat :composeApp:assembleDebug
-  ```
+  <p align="center">
+     A Manga Reader in Development
+    <br />
+  <!--  <a href=""><strong>Explore the docs »</strong></a>
+    <br />
+    <br />
+    <a href="">View Demo</a>
+    ·
+    <a href="">Report Bug</a>
+    ·
+    <a href="">Request Feature</a> -->
+  </p>
+</div>  
 
-### Build and Run Desktop (JVM) Application
+<p align="center">
+  <img src="docs/Screenshot From 2025-08-24 03-08-53.png" width="250"/>
+  <img src="docs/Screenshot From 2025-08-24 03-06-06.png" width="250"/>
+  <img src="docs/Screenshot From 2025-08-24 03-20-14.png" width="250"/>
+</p>
 
-To build and run the development version of the desktop app, use the run configuration from the run widget
-in your IDE’s toolbar or run it directly from the terminal:
-- on macOS/Linux
-  ```shell
-  ./gradlew :composeApp:run
-  ```
-- on Windows
-  ```shell
-  .\gradlew.bat :composeApp:run
-  ```
+## Technologies Used
 
-### Build and Run iOS Application
 
-To build and run the development version of the iOS app, use the run configuration from the run widget
-in your IDE’s toolbar or open the [/iosApp](./iosApp) directory in Xcode and run it from there.
+<!-- ROADMAP -->
+## Roadmap
 
----
+- [x] Add Popular bar to source
+- [x] Add Search bar to source
+- [x] Add Library Function
+- [x] Fix Manga Info
+- [x] Fix Look Library
+- [x] Limit requests and cache info
+- [x] Improve Chapter Reading in Webtoons and Mangas
+- [ ] Progress Bar for page in Chapter
+- [ ] Filtering for Library
 
-Learn more about [Kotlin Multiplatform](https://www.jetbrains.com/help/kotlin-multiplatform-dev/get-started.html)…
+<!--See the [open issues](https://github.com/othneildrew/Best-README-Template/issues) for a full list of proposed features (and known issues). -->
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
