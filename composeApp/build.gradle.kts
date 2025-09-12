@@ -42,6 +42,9 @@ kotlin {
             implementation(compose.components.uiToolingPreview)
             implementation(libs.androidx.lifecycle.viewmodelCompose)
             implementation(libs.androidx.lifecycle.runtimeCompose)
+            implementation(compose.materialIconsExtended)
+            implementation("org.jetbrains.androidx.navigation:navigation-compose:2.9.0-beta05")
+            implementation("org.jetbrains.compose.runtime:runtime-saveable:1.8.2")
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
