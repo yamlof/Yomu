@@ -39,10 +39,12 @@ fun SmallTopAppBarExample() {
 @Composable
 fun HomePage(
     modifier: Modifier,
-   // navController: NavHostController = rememberNavController()
+
 ) {
 
-    /*NavHost(
+    val navController = rememberNavController()
+
+    NavHost(
         navController = navController,
         startDestination = "library"
     ){
@@ -53,5 +55,5 @@ fun HomePage(
                 }
             }
         }
-    }*/
+    }
 }

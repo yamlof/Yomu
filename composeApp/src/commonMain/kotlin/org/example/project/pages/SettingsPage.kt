@@ -1,4 +1,4 @@
 package org.example.project.pages
 
-class SettingsPage {
-}
+import androidx.compose.runtime.Composable
+
