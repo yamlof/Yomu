@@ -153,7 +153,7 @@ val headers = NetworkHeaders.Builder()
     .build()
 
 @Composable
-fun MangaNelo(
+fun MangaBat(
     modifier: Modifier = Modifier,
     navController: NavHostController
 ) {

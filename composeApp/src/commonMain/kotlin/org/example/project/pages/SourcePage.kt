@@ -11,6 +11,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import org.example.project.source.MangaBat
 
 @Composable
 fun SourcePage(
@@ -31,10 +32,10 @@ fun SourcePage(
                 }
                 item {
                     Text(
-                        text = "Manganelo",
+                        text = "MangaBat",
                         modifier = Modifier
                             .clickable {
-                                navController.navigate("detail/Manganelo")
+                                navController.navigate("detail/MangaBat")
                             }
                         /*fontSize = 40.sp,
                         fontWeight = FontWeight.SemiBold,
@@ -43,12 +44,14 @@ fun SourcePage(
                 }
             }
         }
-        /*
+
+
         composable("detail/{source}") { navBackStackEntry ->
             val source = navBackStackEntry.arguments?.getString("source")
-            MangaNelo(navController =navController)
+            MangaBat(navController =navController)
         }
 
+        /*
         composable("SourceItemDetail/{manga_url}"){ navBackStackEntry ->
             val itemName = navBackStackEntry.arguments?.getString("manga_url")
             if (itemName != null) {
