@@ -48,7 +48,7 @@ kotlin {
             implementation(libs.ktor.client.core)
             implementation(libs.ktor.client.content.negotiation)
             implementation(libs.ktor.serialization.kotlinx.json)
-            implementation("io.coil-kt.coil3:coil-network-ktor3:3.3.0")
+            implementation(libs.coil.network.ktor3)
             api("io.github.qdsfdhvh:image-loader:1.10.0")
         }
         commonTest.dependencies {
