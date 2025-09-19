@@ -11,6 +11,10 @@
 
   <p align="center">
      A Manga Reader in Development
+ </p>
+<p align="center">
+Currently migrating to KMP
+</p>
     <br />
   <!--  <a href=""><strong>Explore the docs »</strong></a>
     <br />
@@ -20,7 +24,7 @@
     <a href="">Report Bug</a>
     ·
     <a href="">Request Feature</a> -->
-  </p>
+ 
 </div>  
 
 <p align="center">
