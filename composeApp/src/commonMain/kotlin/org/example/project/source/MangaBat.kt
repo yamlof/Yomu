@@ -9,6 +9,8 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -32,6 +34,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
@@ -43,14 +46,25 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
+import coil3.ImageLoader
+import coil3.PlatformContext
+import coil3.compose.AsyncImage
+import coil3.compose.LocalPlatformContext
+import coil3.compose.rememberAsyncImagePainter
 import coil3.network.NetworkHeaders
+import coil3.network.httpHeaders
+import coil3.network.ktor3.KtorNetworkFetcherFactory
 import coil3.request.ImageRequest
+import coil3.request.crossfade
 import com.seiko.imageloader.rememberImagePainter
 import io.ktor.client.HttpClient
+import io.ktor.client.plugins.DefaultRequest
+import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.request.header
 import org.example.project.network.ApiClient
 import org.example.project.network.LatestManga
 import io.ktor.http.encodeURLQueryComponent
+
 
 
 /*
@@ -87,52 +101,43 @@ fun StyledTextField() {
 
 @Composable
 fun ImageCard(
-    painter: Painter,
-    contentDescription: String,
-    title:String,
+    model: Any, // URL or resource
+    contentDescription: String?,
+    title: String,
     modifier: Modifier = Modifier,
-    contentScale: ContentScale = ContentScale.Crop,
     onClick: () -> Unit
 ) {
     Card(
         modifier = modifier
             .fillMaxWidth()
-            .clickable(onClick = onClick),
-        shape = RoundedCornerShape(15.dp),
-        colors = CardDefaults.cardColors(
-            contentColor = MaterialTheme.colorScheme.surface
-        )
-    ){
-        Box(modifier = Modifier.height(250.dp)) {
-            Image(
-                painter = painter,
+            .clickable { onClick() },
+        shape = RoundedCornerShape(12.dp),
+        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
+    ) {
+        Column {
+            AsyncImage(
+                model = ImageRequest.Builder(LocalPlatformContext.current)
+                    .data(model)
+                    .httpHeaders(headers)
+                    .crossfade(true)
+                    .build(),
                 contentDescription = contentDescription,
-                contentScale = contentScale,
-                modifier = Modifier.fillMaxSize()
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .aspectRatio(0.7f) // common manga cover ratio
+                    .clip(RoundedCornerShape(topStart = 12.dp, topEnd = 12.dp)),
+                contentScale = ContentScale.Crop,
+
             )
-            Box(modifier = Modifier
-                .fillMaxSize()
-                .background(
-                    Brush.verticalGradient(
-                        colors = listOf(
-                            Color.Transparent,
-                            Color.Black
-                        ),
-                        startY = 300f
-                    )
-                )
+
+            Spacer(Modifier.height(8.dp))
+
+            Text(
+                text = title,
+                modifier = Modifier
+                    .padding(horizontal = 8.dp, vertical = 4.dp),
+                maxLines = 2
             )
-            Box(modifier = Modifier
-                .fillMaxSize()
-                .padding(12.dp),
-                contentAlignment = Alignment.BottomStart
-            ) {
-                Text(title,style = androidx.compose.ui.text.TextStyle(
-                    color = Color.White,
-                    fontSize = 16.sp
-                )
-                )
-            }
         }
     }
 }
@@ -140,14 +145,16 @@ fun ImageCard(
 
 val headers = NetworkHeaders.Builder()
     .set("User-Agent", "Mozilla/5.0 (X11; Linux x86_64; rv:131.0) Gecko/20100101 Firefox/131.0")
-    .set("Accept", "image/avif,image/webp,image/png,image/svg+xml,image/*;q=0.8,*/*;q=0.5")
-    .set("Accept-Language", "en-GB,en;q=0.5")
+    .set("Accept", "image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8")
+    .set("Accept-Language", "en-GB,en;q=0.6")
     .set("Connection", "keep-alive")
-    .set("Referer", "https://chapmanganelo.com/")
+    .set("Referer", "https://www.mangabats.com/")
     .set("Sec-Fetch-Dest", "image")
     .set("Sec-Fetch-Mode", "no-cors")
     .set("Sec-Fetch-Site", "cross-site")
-    .set("Priority", "u=5, i")
+    .set("Sec-Fetch-Storage-Access", "none")
+    .set("Sec-GPC", "1")
+    .set("Priority", "u=2, i")
     .set("Pragma", "no-cache")
     .set("Cache-Control", "no-cache")
     .build()
@@ -205,14 +212,14 @@ fun MangaBat(
                 val description = "sunny"
                 val mangaUrl = manga.manga_url
 
-                val painter = rememberImagePainter(mangaUrl)
+                val painter = rememberAsyncImagePainter(imageUrl)
 
                 Box(modifier = Modifier
                     //.fillMaxWidth(0.5f)
                     .padding(5.dp)
                 ){
                     ImageCard(
-                        painter = painter,
+                        model = imageUrl,
                         contentDescription = "devil",
                         title = title,
                         onClick = {

@@ -7,6 +7,9 @@ plugins {
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
     alias(libs.plugins.composeHotReload)
+    alias(libs.plugins.kotlinSerialization)
+
+
 }
 
 kotlin {
@@ -23,6 +26,15 @@ kotlin {
         iosTarget.binaries.framework {
             baseName = "ComposeApp"
             isStatic = true
+        }
+    }
+
+    val ktorVersion = "3.2.3"
+
+
+    listOf(iosArm64(), iosSimulatorArm64()).forEach {
+        it.compilations["main"].defaultSourceSet.dependencies {
+            implementation("io.ktor:ktor-client-darwin:$ktorVersion")
         }
     }
     
@@ -44,12 +56,24 @@ kotlin {
             implementation(libs.androidx.lifecycle.viewmodelCompose)
             implementation(libs.androidx.lifecycle.runtimeCompose)
             implementation(compose.materialIconsExtended)
-            implementation(libs.navigation.compose)
+            //implementation(libs.navigation.compose)
             implementation(libs.ktor.client.core)
             implementation(libs.ktor.client.content.negotiation)
+            //implementation(libs.ktor.serialization.kotlinx.json)
+            //implementation(libs.coil.network.ktor3)
+            api(libs.image.loader)
+            implementation(libs.navigation.compose)
+            val ktor_version = "3.2.3"
+            implementation(libs.ktor.client.content.negotiation.v323)
             implementation(libs.ktor.serialization.kotlinx.json)
-            implementation(libs.coil.network.ktor3)
-            api("io.github.qdsfdhvh:image-loader:1.10.0")
+            //implementation(libs.kotlinx.serialization.json)
+            implementation(libs.kotlinx.serialization.json.v160)
+            implementation("io.coil-kt.coil3:coil-network-ktor3:3.3.0")
+            implementation("io.coil-kt.coil3:coil-compose:3.3.0")
+
+
+
+
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)

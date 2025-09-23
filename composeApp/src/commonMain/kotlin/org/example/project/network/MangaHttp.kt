@@ -26,6 +26,7 @@ object ApiClient {
     suspend fun getLatest(): List<LatestManga> =
         client.get("${baseUrl}latest").body()
 
+
     suspend fun getPopular(): List<LatestManga> =
         client.get("${baseUrl}popular").body()
 

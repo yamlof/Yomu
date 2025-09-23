@@ -9,6 +9,7 @@ data class LatestManga(
     val manga_url : String
 )
 
+
 @Serializable
 data class MangaInfo(
     val title : String,

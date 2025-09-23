@@ -11,7 +11,23 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navDeepLink
+import androidx.navigation.toRoute
+import kotlinx.serialization.Serializable
 import org.example.project.source.MangaBat
+
+@Serializable
+data class DetailRoute(
+    val source: String
+)
+
+/*
+enum class CupcakeScreen(val title: StringResource) {
+    Start(title = Res.string.app_name),
+    Flavor(title = Res.string.choose_flavor),
+    Pickup(title = Res.string.choose_pickup_date),
+    Summary(title = Res.string.order_summary)
+}*/
 
 @Composable
 fun SourcePage(
@@ -35,7 +51,7 @@ fun SourcePage(
                         text = "MangaBat",
                         modifier = Modifier
                             .clickable {
-                                navController.navigate("detail/MangaBat")
+                                navController.navigate(route = "detail/MangaBat")
                             }
                         /*fontSize = 40.sp,
                         fontWeight = FontWeight.SemiBold,
@@ -46,9 +62,9 @@ fun SourcePage(
         }
 
 
-        composable("detail/{source}") { navBackStackEntry ->
-            val source = navBackStackEntry.arguments?.getString("source")
-            MangaBat(navController =navController)
+        composable("detail/MangaBat") { //backStackEntry ->
+            //val args = backStackEntry.toRoute<DetailRoute>()
+            MangaBat(navController = navController)
         }
 
         /*
