@@ -11,10 +11,14 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import androidx.navigation.navDeepLink
 import androidx.navigation.toRoute
 import kotlinx.serialization.Serializable
 import org.example.project.source.MangaBat
+import io.ktor.http.encodeURLParameter
+import io.ktor.http.decodeURLQueryComponent
+
+fun String.encodeForNav(): String = this.encodeURLParameter()
+fun String.decodeFromNav(): String = this.decodeURLQueryComponent()
 
 @Serializable
 data class DetailRoute(
@@ -28,6 +32,9 @@ enum class CupcakeScreen(val title: StringResource) {
     Pickup(title = Res.string.choose_pickup_date),
     Summary(title = Res.string.order_summary)
 }*/
+
+@Serializable
+data class MangaUrl (val url: String)
 
 @Composable
 fun SourcePage(
@@ -67,13 +74,14 @@ fun SourcePage(
             MangaBat(navController = navController)
         }
 
-        /*
-        composable("SourceItemDetail/{manga_url}"){ navBackStackEntry ->
-            val itemName = navBackStackEntry.arguments?.getString("manga_url")
-            if (itemName != null) {
-                ItemDetail(mangaJson = itemName, navController = navController, viewModel = mangaViewModel)
-            }
+
+        composable<MangaUrl>{ navBackStackEntry ->
+
+            val mangaUrl : MangaUrl = navBackStackEntry.toRoute()
+
+            ItemDetail(mangaUrl = mangaUrl.url, navController = navController)
         }
+        /*
 
         composable("chapter/{chapterUrl}") { navBackStackEntry ->
             val chapterName = navBackStackEntry.arguments?.getString("chapterUrl")

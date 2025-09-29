@@ -1,3 +1,4 @@
+import com.google.devtools.ksp.gradle.KspTask
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
@@ -8,6 +9,8 @@ plugins {
     alias(libs.plugins.composeCompiler)
     alias(libs.plugins.composeHotReload)
     alias(libs.plugins.kotlinSerialization)
+    alias(libs.plugins.ksp)
+    alias(libs.plugins.androidx.room)
 
 
 }
@@ -31,7 +34,6 @@ kotlin {
 
     val ktorVersion = "3.2.3"
 
-
     listOf(iosArm64(), iosSimulatorArm64()).forEach {
         it.compilations["main"].defaultSourceSet.dependencies {
             implementation("io.ktor:ktor-client-darwin:$ktorVersion")
@@ -45,6 +47,7 @@ kotlin {
             implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
             implementation(libs.ktor.client.android)
+            implementation(libs.androidx.room.sqlite.wrapper)
         }
         commonMain.dependencies {
             implementation(compose.runtime)
@@ -70,6 +73,8 @@ kotlin {
             implementation(libs.kotlinx.serialization.json.v160)
             implementation("io.coil-kt.coil3:coil-network-ktor3:3.3.0")
             implementation("io.coil-kt.coil3:coil-compose:3.3.0")
+            implementation(libs.androidx.room.runtime)
+            implementation(libs.androidx.sqlite.bundled)
 
 
 
@@ -115,6 +120,11 @@ android {
 
 dependencies {
     debugImplementation(compose.uiTooling)
+    add("kspAndroid", libs.androidx.room.compiler)
+    add("kspIosSimulatorArm64", libs.androidx.room.compiler)
+    //add("kspIos", libs.androidx.room.compiler)
+    //add("kspIosArm64", libs.androidx.room.compiler)
+    add("kspJvm",libs.androidx.room.compiler)
 }
 
 compose.desktop {
@@ -127,4 +137,20 @@ compose.desktop {
             packageVersion = "1.0.0"
         }
     }
+}
+/*
+tasks.withType<KspTask>().configureEach {
+    dependsOn(
+        tasks.matching { it.name.startsWith("generateResourceAccessorsForAndroid") }
+    )
+}
+
+
+tasks.named("kspDebugKotlinAndroid") {
+    dependsOn("generateResourceAccessorsForAndroidDebug")
+    dependsOn("generateResourceAccessorsForAndroidMain")
+}*/
+
+room {
+    schemaDirectory("$projectDir/schemas")
 }

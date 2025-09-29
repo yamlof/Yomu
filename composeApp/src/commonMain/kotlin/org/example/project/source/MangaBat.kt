@@ -64,7 +64,7 @@ import io.ktor.client.request.header
 import org.example.project.network.ApiClient
 import org.example.project.network.LatestManga
 import io.ktor.http.encodeURLQueryComponent
-
+import org.example.project.pages.MangaUrl
 
 
 /*
@@ -212,8 +212,6 @@ fun MangaBat(
                 val description = "sunny"
                 val mangaUrl = manga.manga_url
 
-                val painter = rememberAsyncImagePainter(imageUrl)
-
                 Box(modifier = Modifier
                     //.fillMaxWidth(0.5f)
                     .padding(5.dp)
@@ -223,8 +221,7 @@ fun MangaBat(
                         contentDescription = "devil",
                         title = title,
                         onClick = {
-
-                        }
+                            navController.navigate(route = MangaUrl(mangaUrl))                        }
                     )
                 }
             }
