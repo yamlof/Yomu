@@ -11,8 +11,6 @@ plugins {
     alias(libs.plugins.kotlinSerialization)
     alias(libs.plugins.ksp)
     alias(libs.plugins.androidx.room)
-
-
 }
 
 kotlin {
@@ -138,6 +136,19 @@ compose.desktop {
         }
     }
 }
+
+tasks.configureEach {
+    if (name.startsWith("ksp")) {
+        mustRunAfter(tasks.matching {
+            it.name.startsWith("generate") &&
+                    (it.name.contains("ResourceCollectors") ||
+                            it.name.contains("ComposeResClass") ||
+                            it.name.contains("ResourceAccessors"))
+        })
+    }
+}
+
+
 /*
 tasks.withType<KspTask>().configureEach {
     dependsOn(
