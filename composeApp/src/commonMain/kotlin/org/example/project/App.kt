@@ -25,6 +25,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import org.example.project.pages.HomePage
+import org.example.project.pages.SettingsPage
 import org.example.project.pages.SourcePage
 import org.example.project.pages.SourcePage
 import org.jetbrains.compose.resources.painterResource
@@ -94,6 +95,6 @@ fun ContentScreen(
     when(selectedIndex) {
         0 -> HomePage(modifier = modifier)
         1 -> SourcePage()
-        2 -> SourcePage()
+        2 -> SettingsPage()
     }
 }

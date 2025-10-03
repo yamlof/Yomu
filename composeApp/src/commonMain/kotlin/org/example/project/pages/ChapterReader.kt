@@ -69,7 +69,6 @@ fun ImageViewer(
             .set("Cache-Control", "no-cache")
             .build()
 
-
             AsyncImage(
                 model = ImageRequest.Builder(LocalPlatformContext.current)
                     .data(imageLink)
@@ -79,7 +78,8 @@ fun ImageViewer(
                 contentDescription = "",
                 modifier = Modifier
                     .fillMaxHeight()
-                )
+                    .fillMaxWidth()
+            )
 
     }
 
