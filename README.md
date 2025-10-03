@@ -34,7 +34,7 @@ Currently migrating to KMP
 </p>
 
 ## Technologies Used
-
+Kotlin Multiplatform
 
 <!-- ROADMAP -->
 ## To Do
