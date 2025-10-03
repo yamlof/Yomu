@@ -162,7 +162,8 @@ val headers = NetworkHeaders.Builder()
 @Composable
 fun MangaBat(
     modifier: Modifier = Modifier,
-    navController: NavHostController
+    navController: NavHostController,
+    source : String
 ) {
 
     val mangaLatest = remember { mutableStateOf<List<LatestManga>>(emptyList()) }

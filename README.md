@@ -37,17 +37,15 @@ Currently migrating to KMP
 
 
 <!-- ROADMAP -->
-## Roadmap
+## To Do
 
-- [x] Add Popular bar to source
-- [x] Add Search bar to source
-- [x] Add Library Function
-- [x] Fix Manga Info
-- [x] Fix Look Library
-- [x] Limit requests and cache info
-- [x] Improve Chapter Reading in Webtoons and Mangas
-- [ ] Progress Bar for page in Chapter
-- [ ] Filtering for Library
+- [ ] Add Settings Page configuration
+- [ ] Implement add to library
+- [ ] Fix scaling in latest/popular page
+- [ ] Add +18 filter in app and backend
+- [ ] Add Search Bar on Source
+- [ ] Add buttons to go back for desktop
+- [ ] IOS fix
 
 <!--See the [open issues](https://github.com/othneildrew/Best-README-Template/issues) for a full list of proposed features (and known issues). -->
 

@@ -3,9 +3,11 @@ package org.example.project.pages
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.MaterialTheme
@@ -49,9 +51,11 @@ data class MangaUrl (val url: String)
 @Serializable
 data class ChapterUrl (val url : String)
 
+@Serializable
+data class SourceNavigation(val url: String = "MangaBat")
+
 @Composable
 fun SourcePage(
-
 ){
     val navController = rememberNavController()
 
@@ -67,51 +71,36 @@ fun SourcePage(
                     )
                 }
                 item {
-                    Row (
-                        Modifier
-                            .background(color = MaterialTheme.colorScheme.background)
-                            .padding(start = 25.dp)
-                            .height(50.dp)
+                    Row(
+                        modifier = Modifier
                             .fillMaxWidth()
                             .clickable {
-                                navController.navigate(route = "detail/MangaBat")
-                            },
-                        verticalAlignment = Alignment.CenterVertically,
+                                navController.navigate(SourceNavigation("MangaBat"))
+                            }
+                            .padding(16.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
 
-                        ){
-
-                        val imageUrl = "https://www.mangabats.com/images/favicon-bat.webp"
-
-                        Text(
-                            text = "01"
-                        )
+                        Text( text = "01" )
 
                         AsyncImage(
-                            model = imageUrl,
-                            contentDescription = "Translated description of what the image contains",
+                            model = "https://www.mangabats.com/images/favicon-bat.webp",
+                            contentDescription = "",
                             modifier = Modifier
                                 .padding(horizontal = 25.dp)
                                 .height(25.dp)
                                 .width(25.dp)
                         )
-                        Text(
-                            text = "MangaBat",
-                            modifier = Modifier
-
-                            /*fontSize = 40.sp,
-                            fontWeight = FontWeight.SemiBold,
-                            color = Color.White*/
-                        )
+                        Text("MangaBat")
+                    }
                 }
             }
         }
 
-
-        composable("detail/MangaBat") { //backStackEntry ->
-            //val args = backStackEntry.toRoute<DetailRoute>()
-            MangaBat(navController = navController)
+        composable<SourceNavigation> { navBackStackEntry ->
+            val source : SourceNavigation = navBackStackEntry.toRoute()
+            MangaBat(navController = navController,source = source.url)
         }
-
 
         composable<MangaUrl>{ navBackStackEntry ->
 
@@ -125,16 +114,5 @@ fun SourcePage(
 
             ChapterReader(chapterUrl = chapterUrl.url,navController= navController)
         }
-        /*
-
-        composable("chapter/{chapterUrl}") { navBackStackEntry ->
-            val chapterName = navBackStackEntry.arguments?.getString("chapterUrl")
-            if (chapterName != null) {
-                ChapterReader(chapterUrl = chapterName, navController = navController)
-            }
-        }*/
     }
-
-
-}
 }
