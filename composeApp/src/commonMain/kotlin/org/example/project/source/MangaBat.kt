@@ -126,7 +126,7 @@ fun ImageCard(
                     .fillMaxWidth()
                     .aspectRatio(0.7f) // common manga cover ratio
                     .clip(RoundedCornerShape(topStart = 12.dp, topEnd = 12.dp)),
-                contentScale = ContentScale.Crop,
+                contentScale = ContentScale.Fit,
 
             )
 

@@ -36,6 +36,9 @@ enum class CupcakeScreen(val title: StringResource) {
 @Serializable
 data class MangaUrl (val url: String)
 
+@Serializable
+data class ChapterUrl (val url : String)
+
 @Composable
 fun SourcePage(
 
@@ -80,6 +83,12 @@ fun SourcePage(
             val mangaUrl : MangaUrl = navBackStackEntry.toRoute()
 
             ItemDetail(mangaUrl = mangaUrl.url, navController = navController)
+        }
+
+        composable<ChapterUrl> { navBackStackEntry ->
+            val chapterUrl : ChapterUrl = navBackStackEntry.toRoute()
+
+            ChapterReader(chapterUrl = chapterUrl.url,navController= navController)
         }
         /*
 

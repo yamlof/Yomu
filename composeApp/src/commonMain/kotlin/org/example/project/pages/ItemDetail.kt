@@ -2,7 +2,9 @@ package org.example.project.pages
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -12,6 +14,10 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.MaterialTheme
@@ -34,6 +40,8 @@ import org.example.project.network.ApiClient
 import org.example.project.network.LatestManga
 import org.example.project.source.ImageCard
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.input.KeyboardType.Companion.Uri
+import org.example.project.network.Chapter
 
 @Composable
 fun MangaInformation(
@@ -52,7 +60,7 @@ fun MangaInformation(
         Text(author ?: "Unknown", style = MaterialTheme.typography.bodyMedium)
         Text(status ?: "Unknown", style = MaterialTheme.typography.bodyMedium)
 
-        ElevatedButton(onClick = { /* add to library */ }) {
+        ElevatedButton(onClick = {  }) {
             Text("Add to Library")
         }
     }
@@ -84,22 +92,21 @@ fun ItemDetail(
     val itemsList = remember { mutableStateOf<List<LatestManga>>(emptyList()) }
 
     Column {
-        if (mangaUrl != null) {
-            Text(mangaUrl)
-        }
 
         val fetcheditem  = remember { mutableStateOf<String?>(null) }
         val fetchedTitle = remember { mutableStateOf<String?>(null) }
         val fetchedStatus = remember { mutableStateOf<String?>(null) }
         val fetchedAuthor = remember { mutableStateOf<String?>(null) }
+        val fetchedChapters = remember {mutableStateOf<List<Chapter>>(emptyList()) }
 
         LaunchedEffect(Unit) {
             val fetchedItems = ApiClient.getMangaInfo(mangaUrl.toString())
            // Log.d("MangaNelo", "Fetched items: $fetchedItems")
             fetcheditem.value = fetchedItems.cover
             fetchedTitle.value = fetchedItems.title
-            //fetchedAuthor.value = fetchedItems.author
-            //fetchedStatus.value = fetchedItems.status
+            fetchedAuthor.value = fetchedItems.author
+            fetchedStatus.value = fetchedItems.status
+            fetchedChapters.value = fetchedItems.chapters
         }
 
         OutlinedCard(
@@ -121,14 +128,18 @@ fun ItemDetail(
                 val isCompact = maxWidth < 400.dp
 
                 if (isCompact) {
-                    Column (
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                        verticalArrangement = Arrangement.spacedBy(12.dp),
+                    Row (
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(16.dp),
                         modifier = Modifier.fillMaxWidth()
                     ){
                         MangaCover(
                             cover = fetcheditem.value,
-                            title = fetchedTitle.value
+                            title = fetchedTitle.value,
+                            modifier = Modifier
+                                .width(120.dp)               // fixed width
+                                .aspectRatio(2f / 3f)        // keep manga/book proportions
+                                .padding(vertical = 20.dp)
                         )
 
                         MangaInformation(
@@ -143,11 +154,22 @@ fun ItemDetail(
                         horizontalArrangement = Arrangement.spacedBy(16.dp),
                         modifier = Modifier.fillMaxWidth()
                     ){
-                        MangaCover(
-                            cover = fetcheditem.value,
-                            title = fetchedTitle.value,
-                            modifier = Modifier.weight(1f)
-                        )
+
+                        Box(
+                            modifier = Modifier
+                                //.fillMaxWidth()
+                                .height(120.dp)
+                        ){
+                            MangaCover(
+                                cover = fetcheditem.value,
+                                title = fetchedTitle.value,
+                                modifier = Modifier
+                                    .width(180.dp)
+                                    .aspectRatio(2f / 3f)
+                                    .padding(top = 40.dp)
+                            )
+                        }
+
 
                         MangaInformation(
                             title = fetchedTitle.value,
@@ -162,6 +184,36 @@ fun ItemDetail(
 
 
 
+        }
+        LazyColumn (
+            modifier = Modifier
+                .fillMaxWidth()
+        ){
+            items(fetchedChapters.value) { item ->
+
+                val chapterName = item.title
+                val chapterLink = item.url
+
+                Card(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(60.dp)
+                        .clickable {
+                            navController.navigate(route = ChapterUrl(chapterLink))
+                        },
+                    shape = RectangleShape,
+                    colors = CardDefaults.cardColors(Color(0xFFA4C2D7)),
+                ) {
+                    Text(
+                        text = chapterName ?: "Loading Title",
+                        style = MaterialTheme.typography.titleMedium,
+
+                    )
+                }
+            }
+            item {
+                Text(text = "Last item")
+            }
         }
 
     }
