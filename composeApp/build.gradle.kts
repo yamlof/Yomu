@@ -64,7 +64,7 @@ kotlin {
             //implementation(libs.coil.network.ktor3)
             api(libs.image.loader)
             implementation(libs.navigation.compose)
-            val ktor_version = "3.2.3"
+            //val ktor_version = "3.2.3"
             implementation(libs.ktor.client.content.negotiation.v323)
             implementation(libs.ktor.serialization.kotlinx.json)
             //implementation(libs.kotlinx.serialization.json)
@@ -73,7 +73,15 @@ kotlin {
             implementation("io.coil-kt.coil3:coil-compose:3.3.0")
             implementation(libs.androidx.room.runtime)
             implementation(libs.androidx.sqlite.bundled)
-            implementation(libs.foundation) // Compose foundation
+            implementation(libs.foundation)
+            val koin_version = "4.1.1"
+            implementation("io.insert-koin:koin-compose:${koin_version}")
+            implementation("io.insert-koin:koin-compose-viewmodel:${koin_version}")
+            implementation("io.insert-koin:koin-compose-viewmodel-navigation:${koin_version}")
+
+
+
+
 
 
 

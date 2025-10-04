@@ -25,8 +25,10 @@ import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.BlendMode.Companion.Color
@@ -41,15 +43,22 @@ import org.example.project.network.LatestManga
 import org.example.project.source.ImageCard
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.KeyboardType.Companion.Uri
+import androidx.lifecycle.viewmodel.compose.viewModel
+import kotlinx.coroutines.launch
+import org.example.project.database.MangaViewModel
 import org.example.project.network.Chapter
 
 @Composable
 fun MangaInformation(
+    viewModel: MangaViewModel,
     title: String?,
     author:String?,
     status:String?,
     modifier: Modifier = Modifier
 ) {
+
+    val scope = rememberCoroutineScope()
+
     Column(
         modifier = modifier
             .padding(8.dp),
@@ -60,7 +69,15 @@ fun MangaInformation(
         Text(author ?: "Unknown", style = MaterialTheme.typography.bodyMedium)
         Text(status ?: "Unknown", style = MaterialTheme.typography.bodyMedium)
 
-        ElevatedButton(onClick = {  }) {
+        val library = viewModel.allMangas.collectAsState()
+
+        val manga = library.value.firstOrNull{ it.name == title}
+
+        ElevatedButton(onClick = {
+            scope.launch {
+                manga?.let { viewModel.addManga(it) }
+            }
+        }) {
             Text("Add to Library")
         }
     }
@@ -86,6 +103,7 @@ fun MangaCover(
 
 @Composable
 fun ItemDetail(
+    viewModel: MangaViewModel,
     mangaUrl: String?,
     navController: NavController
 ){
@@ -143,6 +161,7 @@ fun ItemDetail(
                         )
 
                         MangaInformation(
+                            viewModel = viewModel,
                             title = fetchedTitle.value,
                             author = fetchedAuthor.value,
                             status = fetchedStatus.value
@@ -172,6 +191,7 @@ fun ItemDetail(
 
 
                         MangaInformation(
+                            viewModel = viewModel,
                             title = fetchedTitle.value,
                             author = fetchedAuthor.value,
                             status = fetchedStatus.value,

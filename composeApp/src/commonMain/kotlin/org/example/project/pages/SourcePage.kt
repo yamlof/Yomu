@@ -19,6 +19,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -28,6 +29,7 @@ import kotlinx.serialization.Serializable
 import org.example.project.source.MangaBat
 import io.ktor.http.encodeURLParameter
 import io.ktor.http.decodeURLQueryComponent
+import org.example.project.database.MangaViewModel
 
 fun String.encodeForNav(): String = this.encodeURLParameter()
 fun String.decodeFromNav(): String = this.decodeURLQueryComponent()
@@ -56,6 +58,7 @@ data class SourceNavigation(val url: String = "MangaBat")
 
 @Composable
 fun SourcePage(
+    viewModel: MangaViewModel
 ){
     val navController = rememberNavController()
 
@@ -91,7 +94,7 @@ fun SourcePage(
                                 .height(25.dp)
                                 .width(25.dp)
                         )
-                        Text("MangaBat")
+                        Text("MANGABAT")
                     }
                 }
             }
@@ -106,7 +109,7 @@ fun SourcePage(
 
             val mangaUrl : MangaUrl = navBackStackEntry.toRoute()
 
-            ItemDetail(mangaUrl = mangaUrl.url, navController = navController)
+            ItemDetail(viewModel = viewModel,mangaUrl = mangaUrl.url, navController = navController)
         }
 
         composable<ChapterUrl> { navBackStackEntry ->

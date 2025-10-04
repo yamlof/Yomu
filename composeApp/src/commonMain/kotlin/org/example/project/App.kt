@@ -24,81 +24,95 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.viewmodel.compose.viewModel
+import org.example.project.database.MangaViewModel
+import org.example.project.di.commonModule
 import org.example.project.pages.HomePage
 import org.example.project.pages.SettingsPage
 import org.example.project.pages.SourcePage
 import org.example.project.pages.SourcePage
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
+import org.koin.compose.KoinApplication
+import org.koin.compose.viewmodel.koinViewModel
+import org.koin.core.KoinApplication
 
-import yomu.composeapp.generated.resources.Res
-import yomu.composeapp.generated.resources.compose_multiplatform
 
 @Composable
 @Preview
 fun App() {
+
     MaterialTheme (
         typography = jetBrainsMonoTypography()
     ){
 
 
 
-        val navItemList = listOf(
-            NavItem("Home", Icons.Filled.Home,0),
-            NavItem("Sources", Icons.Default.Notifications,0),
-            NavItem("Settings", Icons.Default.Settings,0)
-        )
+            val navItemList = listOf(
+                NavItem("Home", Icons.Filled.Home,0),
+                NavItem("Sources", Icons.Default.Notifications,0),
+                NavItem("Settings", Icons.Default.Settings,0)
+            )
 
-        val selectedIndex = remember { mutableStateOf(0) }
+            val selectedIndex = remember { mutableStateOf(0) }
 
-        Scaffold(
-            modifier = Modifier.fillMaxSize(),
-            bottomBar = {
-                NavigationBar {
-                    navItemList.forEachIndexed {index, navItem ->
-                        NavigationBarItem(
-                            selected = selectedIndex.value == index,
-                            onClick = {
-                                selectedIndex.value = index
-                            },
-                            icon = {
-                                BadgedBox(badge =  {
-                                    if(navItem.badgeCount>0)
-                                        Badge(){
-                                            Text(text = navItem.badgeCount.toString() )
-                                        }
-                                }) {
-                                    Icon(imageVector = navItem.icon, contentDescription = "Icon")
+            val viewModel = koinViewModel<MangaViewModel>()
+            Scaffold(
+                modifier = Modifier.fillMaxSize(),
+                bottomBar = {
+                    NavigationBar {
+                        navItemList.forEachIndexed {index, navItem ->
+                            NavigationBarItem(
+                                selected = selectedIndex.value == index,
+                                onClick = {
+                                    selectedIndex.value = index
+                                },
+                                icon = {
+                                    BadgedBox(badge =  {
+                                        if(navItem.badgeCount>0)
+                                            Badge(){
+                                                Text(text = navItem.badgeCount.toString() )
+                                            }
+                                    }) {
+                                        Icon(imageVector = navItem.icon, contentDescription = "Icon")
+                                    }
+                                },
+                                label = {
+                                    Text(text = navItem.label)
                                 }
-                            },
-                            label = {
-                                Text(text = navItem.label)
-                            }
-                        )
+                            )
+                        }
                     }
                 }
+            ) { innerPadding ->
+                ContentScreen(
+                    viewModel = viewModel,
+                    modifier = Modifier
+                        .padding(
+                            paddingValues = innerPadding
+                        ),
+                    selectedIndex.value
+                )
             }
-        ) { innerPadding ->
-            ContentScreen(
-                modifier = Modifier
-                    .padding(
-                        paddingValues = innerPadding
-                    ),
-                selectedIndex.value
-            )
+
         }
 
+
+
+
+
     }
-}
+
 
 @Composable
 fun ContentScreen(
+    viewModel: MangaViewModel,
     modifier: Modifier,
     selectedIndex:Int,
 ) {
     when(selectedIndex) {
         0 -> HomePage(modifier = modifier)
-        1 -> SourcePage()
+        1 -> SourcePage(viewModel = viewModel )
         2 -> SettingsPage()
     }
 }

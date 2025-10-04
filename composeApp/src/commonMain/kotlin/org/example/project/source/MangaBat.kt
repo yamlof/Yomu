@@ -191,7 +191,7 @@ fun MangaBat(
                         modifier = Modifier
                             .padding(top = 40.dp)
                         ,
-                        text = "MangaNelo"
+                        text = "MANGABAT"
                     )
 
                 }
