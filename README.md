@@ -40,8 +40,8 @@ Kotlin Multiplatform
 ## To Do
 
 - [ ] Add Settings Page configuration
-- [ ] Implement add to library
-- [ ] Fix scaling in latest/popular page
+- [x] Implement add to library
+- [x] Fix scaling in latest/popular page
 - [ ] Add +18 filter in app and backend
 - [ ] Add Search Bar on Source
 - [ ] Add buttons to go back for desktop
