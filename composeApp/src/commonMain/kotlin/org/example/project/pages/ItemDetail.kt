@@ -1,7 +1,6 @@
 package org.example.project.pages
 
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -9,11 +8,9 @@ import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.aspectRatio
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -31,20 +28,14 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.BlendMode.Companion.Color
 import androidx.compose.ui.graphics.RectangleShape
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.seiko.imageloader.rememberImagePainter
 import org.example.project.network.ApiClient
 import org.example.project.network.LatestManga
 import org.example.project.source.ImageCard
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.input.KeyboardType.Companion.Uri
-import androidx.lifecycle.viewmodel.compose.viewModel
-import kotlinx.coroutines.launch
+import org.example.project.database.MangaEntity
 import org.example.project.database.MangaViewModel
 import org.example.project.network.Chapter
 
@@ -52,8 +43,10 @@ import org.example.project.network.Chapter
 fun MangaInformation(
     viewModel: MangaViewModel,
     title: String?,
-    author:String?,
-    status:String?,
+    author: String?,
+    status: String?,
+    cover: String?,
+    url: String?,
     modifier: Modifier = Modifier
 ) {
 
@@ -69,14 +62,23 @@ fun MangaInformation(
         Text(author ?: "Unknown", style = MaterialTheme.typography.bodyMedium)
         Text(status ?: "Unknown", style = MaterialTheme.typography.bodyMedium)
 
-        val library = viewModel.allMangas.collectAsState()
+        val newManga = MangaEntity(
+            name = title.toString(),
+            cover = cover.toString(),
+            mangaUrl = url.toString()
+        )
 
-        val manga = library.value.firstOrNull{ it.name == title}
+        val library =  viewModel.allMangas.collectAsState()
+
+// Debug print
+        LaunchedEffect(library) {
+            println("Current library: $library")
+        }
+
 
         ElevatedButton(onClick = {
-            scope.launch {
-                manga?.let { viewModel.addManga(it) }
-            }
+            viewModel.addManga(newManga)
+
         }) {
             Text("Add to Library")
         }
@@ -164,7 +166,9 @@ fun ItemDetail(
                             viewModel = viewModel,
                             title = fetchedTitle.value,
                             author = fetchedAuthor.value,
-                            status = fetchedStatus.value
+                            status = fetchedStatus.value,
+                            cover = fetcheditem.value,
+                            url = mangaUrl
                         )
                     }
                 } else {
@@ -195,6 +199,8 @@ fun ItemDetail(
                             title = fetchedTitle.value,
                             author = fetchedAuthor.value,
                             status = fetchedStatus.value,
+                            cover = fetcheditem.value,
+                            url = mangaUrl,
                             modifier = Modifier.weight(1f)
                         )
                     }

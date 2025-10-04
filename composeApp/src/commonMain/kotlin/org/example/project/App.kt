@@ -111,7 +111,7 @@ fun ContentScreen(
     selectedIndex:Int,
 ) {
     when(selectedIndex) {
-        0 -> HomePage(modifier = modifier)
+        0 -> HomePage(viewModel,modifier = modifier)
         1 -> SourcePage(viewModel = viewModel )
         2 -> SettingsPage()
     }

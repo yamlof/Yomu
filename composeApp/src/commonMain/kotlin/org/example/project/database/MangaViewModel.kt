@@ -24,8 +24,10 @@ class MangaViewModel (
 
     val allMangas : StateFlow<List<MangaEntity>> = mangaRepository.allMangas
 
-    suspend fun addManga(manga: MangaEntity){
-        mangaRepository.insertManga(manga)
+    fun addManga(manga: MangaEntity){
+        viewModelScope.launch {
+            mangaRepository.insertManga(manga)
+        }
     }
 
 }
