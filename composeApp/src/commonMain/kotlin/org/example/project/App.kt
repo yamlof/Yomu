@@ -37,7 +37,11 @@ import yomu.composeapp.generated.resources.compose_multiplatform
 @Composable
 @Preview
 fun App() {
-    MaterialTheme {
+    MaterialTheme (
+        typography = jetBrainsMonoTypography()
+    ){
+
+
 
         val navItemList = listOf(
             NavItem("Home", Icons.Filled.Home,0),

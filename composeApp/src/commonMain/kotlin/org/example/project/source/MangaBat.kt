@@ -6,6 +6,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -198,34 +199,48 @@ fun MangaBat(
             }
         }
 
-        LazyVerticalGrid(
-            columns = GridCells.Fixed(2),
-            contentPadding = PaddingValues(16.dp),
+        BoxWithConstraints(
             modifier = Modifier
-                .padding(bottom = 90.dp)
+                .fillMaxWidth()
+                .padding(12.dp)
         ) {
-            items(mangaLatest.value.size) { index ->
+            val isCompact = maxWidth < 600.dp
+            val columns = if (isCompact) 2 else 4
+            val itemPadding = if (isCompact) 6.dp else 10.dp
+            val gridPadding = if (isCompact) 12.dp else 24.dp
 
-                val manga = mangaLatest.value[index]
+            LazyVerticalGrid(
+                columns = GridCells.Fixed(columns),
+                contentPadding = PaddingValues(gridPadding),
+                modifier = Modifier
+                    .padding(bottom = 90.dp)
+            ) {
+                items(mangaLatest.value.size) { index ->
 
-                val imageUrl = manga.cover
-                val title = manga.title
-                val description = "sunny"
-                val mangaUrl = manga.manga_url
+                    val manga = mangaLatest.value[index]
 
-                Box(modifier = Modifier
-                    //.fillMaxWidth(0.5f)
-                    .padding(5.dp)
-                ){
-                    ImageCard(
-                        model = imageUrl,
-                        contentDescription = "devil",
-                        title = title,
-                        onClick = {
-                            navController.navigate(route = MangaUrl(mangaUrl))                        }
-                    )
+                    val imageUrl = manga.cover
+                    val title = manga.title
+                    val description = "sunny"
+                    val mangaUrl = manga.manga_url
+
+                    Box(modifier = Modifier
+                        //.fillMaxWidth(0.5f)
+                        .padding(5.dp)
+                    ){
+                        ImageCard(
+                            model = imageUrl,
+                            contentDescription = "devil",
+                            title = title,
+                            onClick = {
+                                navController.navigate(route = MangaUrl(mangaUrl))
+                            }
+                        )
+                    }
                 }
             }
         }
+
+
     }
 }

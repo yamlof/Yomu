@@ -10,12 +10,14 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
 import androidx.navigation.NavController
 import androidx.navigation.NavHost
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import org.example.project.jetBrainsMonoTypography
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -29,7 +31,9 @@ fun SmallTopAppBarExample() {
                     titleContentColor = MaterialTheme.colorScheme.primary,
                 ),
                 title = {
-                    Text(text = "Library")
+                    Text(text = "LIBRARY", style = MaterialTheme.typography.headlineMedium)
+
+
                 }
             )
         },
