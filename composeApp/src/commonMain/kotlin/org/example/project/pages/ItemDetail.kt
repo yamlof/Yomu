@@ -69,18 +69,20 @@ fun MangaInformation(
         )
 
         val library =  viewModel.allMangas.collectAsState()
+        val isInLibrary = library.value.any({ it.name == newManga.name })
 
 // Debug print
         LaunchedEffect(library) {
             println("Current library: $library")
         }
 
-
         ElevatedButton(onClick = {
             viewModel.addManga(newManga)
 
         }) {
-            Text("Add to Library")
+            Text(
+                text = if (isInLibrary) "Remove from Library" else "Add to Library"
+            )
         }
     }
 }

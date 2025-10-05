@@ -10,14 +10,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
-open class BaseViewModel {
-    protected val viewModelScope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
-
-    open fun clear(){
-        viewModelScope.cancel()
-    }
-}
-
 class MangaViewModel (
     private val mangaRepository: MangaRepository
 ): ViewModel() {

@@ -205,7 +205,12 @@ fun MangaBat(
                 .padding(12.dp)
         ) {
             val isCompact = maxWidth < 600.dp
-            val columns = if (isCompact) 2 else 4
+            val isWide = maxWidth > 840.dp
+            val columns = when {
+                isCompact -> 2
+                isWide -> 8
+                else -> 4
+            }
             val itemPadding = if (isCompact) 6.dp else 10.dp
             val gridPadding = if (isCompact) 12.dp else 24.dp
 

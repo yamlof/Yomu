@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -25,13 +26,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
-import androidx.navigation.NavHost
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import org.example.project.database.MangaViewModel
 import org.example.project.jetBrainsMonoTypography
@@ -41,8 +36,6 @@ import org.example.project.source.ImageCard
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SmallTopAppBarExample() {
-    Scaffold(
-        topBar = {
             TopAppBar(
                 colors = TopAppBarDefaults.topAppBarColors(
                     containerColor = MaterialTheme.colorScheme.primaryContainer,
@@ -50,12 +43,8 @@ fun SmallTopAppBarExample() {
                 ),
                 title = {
                     Text(text = "LIBRARY", style = MaterialTheme.typography.headlineMedium)
-
-
                 }
             )
-        },
-    ){}
 }
 
 @Composable
@@ -72,59 +61,57 @@ fun HomePage(
         println("Entering Library! Current mangas: $allMangas")
     }
 
-
-        NavHost(
-            navController = navController,
-            startDestination = "library",
-            modifier = Modifier.padding()
-        ) {
-            composable("library") {
-
-
-
-                SmallTopAppBarExample()
-
-                BoxWithConstraints(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(12.dp)
-                ) {
-                    val isCompact = maxWidth < 600.dp
-                    val columns = if (isCompact) 2 else 4
-                    val itemPadding = if (isCompact) 6.dp else 10.dp
-                    val gridPadding = if (isCompact) 12.dp else 24.dp
-
-                    LazyVerticalGrid(
-                        columns = GridCells.Fixed(columns),
-                        contentPadding = PaddingValues(gridPadding),
+                    BoxWithConstraints(
                         modifier = Modifier
-                            .padding(bottom = 90.dp)
+                            .fillMaxWidth()
+                            .fillMaxHeight()
+                            //.weight(1f)
+                            .padding(12.dp)
                     ) {
-                        items(allMangas) { manga ->
+                        val isCompact = maxWidth < 600.dp
+                        val isWide = maxWidth > 840.dp
+                        val columns = when {
+                            isCompact -> 2
+                            isWide -> 8
+                            else -> 4
+                        }
+                        val itemPadding = if (isCompact) 6.dp else 10.dp
+                        val gridPadding = if (isCompact) 12.dp else 24.dp
 
-                            //val manga = allMangas[index]
+                        Column {
+                            SmallTopAppBarExample()
 
-                            val imageUrl = manga.cover
-                            val title = manga.name
-                            val description = "sunny"
-                            val mangaUrl = manga.mangaUrl
+                            LazyVerticalGrid(
+                                columns = GridCells.Fixed(columns),
+                                contentPadding = PaddingValues(gridPadding),
+                                modifier = Modifier
+                                    .padding(bottom = 90.dp)
+                                    .weight(1f)
+                            ) {
+                                items(allMangas) { manga ->
 
-                            Box(modifier = Modifier
-                                //.fillMaxWidth(0.5f)
-                                .padding(5.dp)
-                            ){
-                                ImageCard(
-                                    model = imageUrl,
-                                    contentDescription = "devil",
-                                    title = title,
-                                    onClick = {
-                                        navController.navigate(route = MangaUrl(mangaUrl))
+                                    //val manga = allMangas[index]
+
+                                    val imageUrl = manga.cover
+                                    val title = manga.name
+                                    val description = "sunny"
+                                    val mangaUrl = manga.mangaUrl
+
+                                    Box(modifier = Modifier
+                                        //.fillMaxWidth(0.5f)
+                                        .padding(5.dp)
+                                    ){
+                                        ImageCard(
+                                            model = imageUrl,
+                                            contentDescription = "devil",
+                                            title = title,
+                                            onClick = {
+                                                navController.navigate(route = MangaUrl(mangaUrl))
+                                            }
+                                        )
                                     }
-                                )
+                                }
                             }
                         }
                     }
                 }
-            }
-        }
-    }

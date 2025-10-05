@@ -14,7 +14,6 @@ abstract class MangaDatabase : RoomDatabase() {
     abstract fun getDao(): MangaDao
 }
 
-// The Room compiler generates the `actual` implementations.
 @Suppress("KotlinNoActualForExpect")
 expect object AppDatabaseConstructor : RoomDatabaseConstructor<MangaDatabase> {
     override fun initialize(): MangaDatabase

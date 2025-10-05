@@ -18,7 +18,7 @@ val commonModule = module {
 
     single<MangaDatabase> {
         getRoomDatabase(
-            builder = get() // RoomDatabase.Builder will be provided platform-specifically
+            builder = get()
         )
     }
 
