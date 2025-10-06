@@ -18,12 +18,14 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
@@ -65,12 +67,13 @@ import io.ktor.client.request.header
 import org.example.project.network.ApiClient
 import org.example.project.network.LatestManga
 import io.ktor.http.encodeURLQueryComponent
+import org.example.project.database.MangaViewModel
 import org.example.project.pages.MangaUrl
+import org.koin.compose.viewmodel.koinViewModel
 
 
-/*
 @Composable
-fun StyledTextField() {
+fun StyledTextField(viewModel: SearchView) {
 
     var value by remember { mutableStateOf("") }
 
@@ -98,7 +101,7 @@ fun StyledTextField() {
             }
         )
     )
-}*/
+}
 
 @Composable
 fun ImageCard(
@@ -170,8 +173,12 @@ fun MangaBat(
     val mangaLatest = remember { mutableStateOf<List<LatestManga>>(emptyList()) }
 
 
+    val viewModel = koinViewModel<SearchView>()
+
+    val mangas = remember { viewModel.mangas}
+
     LaunchedEffect(Unit) {
-        mangaLatest.value = ApiClient.getLatest()
+        viewModel.fetchLatest()
     }
 
     Column {
@@ -194,6 +201,26 @@ fun MangaBat(
                         text = "MANGABAT"
                     )
 
+                    StyledTextField(viewModel)
+
+                }
+
+                Row {
+                    ElevatedCard(
+                        onClick = {
+                            viewModel.fetchPopular()
+                        }
+                    ){
+                        Text("Popular Manga")
+                    }
+
+                    ElevatedCard (
+                        onClick = {
+                            viewModel.fetchLatest()
+                        }
+                    ){
+                        Text("Latest Manga")
+                    }
                 }
 
             }
@@ -220,9 +247,9 @@ fun MangaBat(
                 modifier = Modifier
                     .padding(bottom = 90.dp)
             ) {
-                items(mangaLatest.value.size) { index ->
+                items(mangas.value) { manga->
 
-                    val manga = mangaLatest.value[index]
+                    //val manga = mangaLatest.value
 
                     val imageUrl = manga.cover
                     val title = manga.title

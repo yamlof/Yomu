@@ -7,6 +7,7 @@ import org.example.project.database.MangaDatabase
 import org.example.project.database.MangaRepository
 import org.example.project.database.MangaViewModel
 import org.example.project.database.getRoomDatabase
+import org.example.project.source.SearchView
 import org.koin.core.module.dsl.bind
 import org.koin.core.module.dsl.singleOf
 import org.koin.core.module.dsl.viewModelOf
@@ -28,4 +29,5 @@ val commonModule = module {
 
     singleOf(::MangaRepository)
     viewModelOf(::MangaViewModel)
+    viewModelOf(::SearchView)
 }

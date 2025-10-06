@@ -29,8 +29,8 @@ class MangaRepository (
         mangaDao.update(manga)
     }
 
-    suspend fun  deleteManga(name:String){
-        mangaDao.delete(name)
+    suspend fun  deleteManga(manga: String){
+        mangaDao.delete(manga)
     }
 
     fun getAllMangas() : Flow<List<MangaEntity>> {

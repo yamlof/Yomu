@@ -22,4 +22,10 @@ class MangaViewModel (
         }
     }
 
+    fun removeManga(manga: String){
+        viewModelScope.launch {
+            mangaRepository.deleteManga(manga)
+        }
+    }
+
 }

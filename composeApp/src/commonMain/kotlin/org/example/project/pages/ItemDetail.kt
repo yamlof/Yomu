@@ -77,7 +77,11 @@ fun MangaInformation(
         }
 
         ElevatedButton(onClick = {
-            viewModel.addManga(newManga)
+            if (isInLibrary){
+                viewModel.removeManga(newManga.name)
+            } else {
+                viewModel.addManga(newManga)
+            }
 
         }) {
             Text(

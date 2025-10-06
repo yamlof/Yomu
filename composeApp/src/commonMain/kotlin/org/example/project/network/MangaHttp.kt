@@ -19,19 +19,20 @@ object ApiClient {
     }
 
     private const val baseUrl = "https://manga-sp-faecffgcasbjgdcp.switzerlandnorth-01.azurewebsites.net/manga/"
+    private const val testUrl = "http://10.24.77.0:5000/manga/"
 
     suspend fun getHelloMessage(): String =
         client.get("${baseUrl}hello").body()
 
     suspend fun getLatest(): List<LatestManga> =
-        client.get("${baseUrl}latest").body()
+        client.get("${testUrl}latest").body()
 
 
     suspend fun getPopular(): List<LatestManga> =
         client.get("${baseUrl}popular").body()
 
     suspend fun getMangaInfo(url: String): MangaInfo =
-        client.get("${baseUrl}manga_info") {
+        client.get("${testUrl}manga_info") {
             parameter("mangaInfo", url)
         }.body()
 
