@@ -48,6 +48,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import coil3.ImageLoader
 import coil3.PlatformContext
@@ -166,7 +167,7 @@ val headers = NetworkHeaders.Builder()
 @Composable
 fun MangaBat(
     modifier: Modifier = Modifier,
-    navController: NavHostController,
+    navController: NavController,
     source : String
 ) {
 

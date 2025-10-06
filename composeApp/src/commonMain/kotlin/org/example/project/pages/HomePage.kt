@@ -27,6 +27,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import org.example.project.database.MangaViewModel
 import org.example.project.jetBrainsMonoTypography
@@ -51,10 +52,10 @@ fun SmallTopAppBarExample() {
 fun HomePage(
     viewModel: MangaViewModel,
     modifier: Modifier,
+    navController: NavController
 
 ) {
 
-    val navController = rememberNavController()
     val allMangas by viewModel.allMangas.collectAsState()
 
     LaunchedEffect(Unit) {
