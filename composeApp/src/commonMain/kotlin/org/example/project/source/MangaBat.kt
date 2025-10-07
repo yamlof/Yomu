@@ -195,6 +195,14 @@ fun MangaBat(
                 Arrangement.SpaceEvenly
             ) {
                 Row {
+
+                    Button(
+                        onClick = { navController.popBackStack()
+                        })
+                    {
+                        Text("Go Back")
+                    }
+
                     Text(
                         modifier = Modifier
                             .padding(top = 40.dp)
