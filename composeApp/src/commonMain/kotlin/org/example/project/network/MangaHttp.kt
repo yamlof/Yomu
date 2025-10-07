@@ -19,7 +19,7 @@ object ApiClient {
     }
 
     private const val baseUrl = "https://manga-sp-faecffgcasbjgdcp.switzerlandnorth-01.azurewebsites.net/manga/"
-    private const val testUrl = "http://10.24.77.0:5000/manga/"
+    private const val testUrl = "http://10.24.72.29:5000/manga/"
 
     suspend fun getHelloMessage(): String =
         client.get("${baseUrl}hello").body()
@@ -37,7 +37,7 @@ object ApiClient {
         }.body()
 
     suspend fun getChapterInfo(url: String): List<ImageManga> =
-        client.get("${baseUrl}chapter") {
+        client.get("${testUrl}chapter") {
             parameter("chapterUrl", url)
         }.body()
 

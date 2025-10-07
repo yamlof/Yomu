@@ -40,6 +40,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
+import io.github.aakira.napier.DebugAntilog
+import io.github.aakira.napier.Napier
 import org.example.project.database.MangaViewModel
 import org.example.project.di.commonModule
 import org.example.project.pages.ChapterReader
@@ -78,6 +80,14 @@ fun App() {
 
             val navController = rememberNavController()
 
+            Napier.base(DebugAntilog())
+
+            val currentDestination = navController
+                .currentBackStackEntryAsState().value?.destination?.route
+
+            val showBottomBar = navItemList.any { it.route == currentDestination }
+
+
             val viewModel = koinViewModel<MangaViewModel>()
             Scaffold(
                 modifier = Modifier
@@ -86,56 +96,72 @@ fun App() {
                 ,
                 containerColor = Color.Transparent,
                 bottomBar = {
-                    NavigationBar (
-                        containerColor = Color.Transparent,
-                        tonalElevation = 0.dp,
-                        modifier = Modifier
-                        //    .height(48.dp)
-                        ,
+                    if (showBottomBar){
+                        NavigationBar (
+                            containerColor = Color.Transparent,
+                            tonalElevation = 0.dp,
+                            modifier = Modifier
+                            //    .height(48.dp)
+                            ,
 
+                            ) {
+                            val currentDestination = navController.currentBackStackEntryAsState().value?.destination
 
-                        ) {
-                        val currentDestination = navController.currentBackStackEntryAsState().value?.destination
-                        navItemList.forEach { navItem ->
-                            val selected = currentDestination?.route == navItem.route
-                            NavigationBarItem(
-                                selected = selected,
-                                onClick = {
-                                    navController.navigate(navItem.route) {
-                                        popUpTo(navController.graph.startDestinationId) { saveState = true }
-                                        launchSingleTop = true
-                                        restoreState = true
-                                    }
-                                },
-                                icon = {
-                                    BadgedBox(badge = {
-                                        if (navItem.badgeCount > 0)
-                                            Badge { Text(text = navItem.badgeCount.toString()) }
-                                    }) {
-                                        Icon(navItem.icon, contentDescription = navItem.label)
-                                    }
-                                },
-                                label = { Text(navItem.label) }
-                            )
+                            navItemList.forEach { navItem ->
+                                val selected = currentDestination?.route == navItem.route
+                                NavigationBarItem(
+                                    selected = selected,
+                                    onClick = {
+                                        navController.navigate(navItem.route) {
+                                            popUpTo(navController.graph.startDestinationId) { saveState = true }
+                                            launchSingleTop = true
+                                            restoreState = true
+                                        }
+                                    },
+                                    icon = {
+                                        BadgedBox(badge = {
+                                            if (navItem.badgeCount > 0)
+                                                Badge { Text(text = navItem.badgeCount.toString()) }
+                                        }) {
+                                            Icon(navItem.icon, contentDescription = navItem.label)
+                                        }
+                                    },
+                                    label = { Text(navItem.label) }
+                                )
+                            }
                         }
                     }
+
                 }
             ) { innerPadding ->
-
-                Box(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .background(MaterialTheme.colorScheme.background)
-                        .padding(innerPadding)
-                ) {
                     NavHost(
                         navController = navController,
                         startDestination = "home",
-                        modifier = Modifier.fillMaxSize()
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding()
                     ) {
-                        composable("home") { HomePage(viewModel, Modifier, navController) }
-                        composable("sources") { SourcePage(viewModel,navController) }
-                        composable("settings") { SettingsPage() }
+                        composable("home") {
+                            HomePage(
+                                viewModel,
+                                modifier = Modifier
+                                    .padding(innerPadding),
+                                navController
+                            )
+                        }
+                        composable("sources") {
+                            SourcePage(
+                                modifier = Modifier
+                                    .padding(innerPadding),
+                                viewModel,
+                                navController
+                            )
+                        }
+                        composable("settings") {
+                            SettingsPage(
+
+                            )
+                        }
 
                         composable<SourceNavigation> {
                             val source: SourceNavigation = it.toRoute()
@@ -147,10 +173,9 @@ fun App() {
                         }
                         composable<ChapterUrl> {
                             val chapterUrl: ChapterUrl = it.toRoute()
-                            ChapterReader(chapterUrl.url, navController)
+                            ChapterReader(modifier = Modifier,chapterUrl.url, navController)
                         }
                     }
-                }
 
 
             }

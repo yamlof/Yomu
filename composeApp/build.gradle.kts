@@ -46,6 +46,8 @@ kotlin {
             implementation(libs.androidx.activity.compose)
             implementation(libs.ktor.client.android)
             implementation(libs.androidx.room.sqlite.wrapper)
+            //implementation(libs.ktor.client.okhttp)
+
         }
         commonMain.dependencies {
             implementation(compose.runtime)
@@ -64,7 +66,7 @@ kotlin {
             //implementation(libs.coil.network.ktor3)
             api(libs.image.loader)
             implementation(libs.navigation.compose)
-            //val ktor_version = "3.2.3"
+            val ktor_version = "3.3.0"
             implementation(libs.ktor.client.content.negotiation.v323)
             implementation(libs.ktor.serialization.kotlinx.json)
             //implementation(libs.kotlinx.serialization.json)
@@ -79,14 +81,14 @@ kotlin {
             implementation("io.insert-koin:koin-compose-viewmodel:${koin_version}")
             implementation("io.insert-koin:koin-compose-viewmodel-navigation:${koin_version}")
 
+            // ktor client
 
+            implementation("io.ktor:ktor-client-core:${ktor_version}")
+            implementation("io.ktor:ktor-client-cio:${ktor_version}")
 
-
-
-
-
-
-
+            // logging
+            val napierVersion = "2.7.1"
+            implementation("io.github.aakira:napier:${napierVersion}")
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)

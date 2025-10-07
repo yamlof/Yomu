@@ -59,6 +59,7 @@ data class SourceNavigation(val url: String = "MangaBat")
 
 @Composable
 fun SourcePage(
+    modifier: Modifier,
     viewModel: MangaViewModel,
     navController : NavController
 ){
