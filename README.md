@@ -10,10 +10,10 @@
 <h3 align="center">Yomu App</h3>
 
   <p align="center">
-     A Manga Reader in Development
+     A Manga Reader made in Kotlin MultiPlatform
  </p>
 <p align="center">
-Currently migrating to KMP
+Currently supports Android and Desktop
 </p>
     <br />
   <!--  <a href=""><strong>Explore the docs »</strong></a>
