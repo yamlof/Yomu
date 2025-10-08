@@ -3,11 +3,11 @@
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-  <a href="https://github.com/othneildrew/Best-README-Template">
+  <a href="">
     <img src="docs/yomulogo.png" alt="Logo" width="80" height="80">
   </a>
 
-<h3 align="center">Yomu App</h3>
+<h3 align="center">Yomu</h3>
 
   <p align="center">
      A Manga Reader made in Kotlin MultiPlatform
