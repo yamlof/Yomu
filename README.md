@@ -4,7 +4,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/othneildrew/Best-README-Template">
-    <img src="app/src/main/res/mipmap-hdpi/ic_launcher.webp" alt="Logo" width="80" height="80">
+    <img src="docs/yomulogo.png" alt="Logo" width="80" height="80">
   </a>
 
 <h3 align="center">Yomu App</h3>
@@ -28,9 +28,9 @@ Currently migrating to KMP
 </div>  
 
 <p align="center">
-  <img src="docs/Screenshot From 2025-08-24 03-08-53.png" width="250"/>
-  <img src="docs/Screenshot From 2025-08-24 03-06-06.png" width="250"/>
-  <img src="docs/Screenshot From 2025-08-24 03-20-14.png" width="250"/>
+  <img src="docs/library.png" width="2940"/>
+  <img src="docs/itemdetailscreenshot.png" width="2940"/>
+  <img src="docs/garou.png" width="2940"/>
 </p>
 
 ## Technologies Used

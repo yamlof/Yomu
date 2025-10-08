@@ -51,8 +51,6 @@ fun MangaInformation(
     modifier: Modifier = Modifier
 ) {
 
-    val scope = rememberCoroutineScope()
-
     Column(
         modifier = modifier
             .padding(8.dp),
@@ -140,8 +138,6 @@ fun ItemDetail(
             Text("Go Back")
         }
 
-        Text("This is the detail screen")
-
         OutlinedCard(
             colors = CardDefaults.cardColors(
                 containerColor = MaterialTheme.colorScheme.surface,
@@ -170,8 +166,8 @@ fun ItemDetail(
                             cover = fetcheditem.value,
                             title = fetchedTitle.value,
                             modifier = Modifier
-                                .width(120.dp)               // fixed width
-                                .aspectRatio(2f / 3f)        // keep manga/book proportions
+                                .width(120.dp)
+                                .aspectRatio(2f / 3f)
                                 .padding(vertical = 20.dp)
                         )
 
@@ -250,9 +246,7 @@ fun ItemDetail(
                     )
                 }
             }
-            item {
-                Text(text = "Last item")
-            }
+
         }
 
     }

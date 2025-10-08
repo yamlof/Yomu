@@ -194,7 +194,9 @@ fun MangaBat(
                 Modifier.fillMaxWidth(),
                 Arrangement.SpaceEvenly
             ) {
-                Row {
+                Row(
+                    horizontalArrangement = Arrangement.SpaceEvenly
+                ) {
 
                     Button(
                         onClick = { navController.popBackStack()
@@ -237,7 +239,7 @@ fun MangaBat(
 
         BoxWithConstraints(
             modifier = Modifier
-                .fillMaxWidth()
+                .fillMaxSize()
                 .padding(12.dp)
         ) {
             val isCompact = maxWidth < 600.dp
