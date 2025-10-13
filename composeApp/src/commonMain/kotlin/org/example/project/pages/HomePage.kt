@@ -97,6 +97,7 @@ fun HomePage(
                                     val title = manga.name
                                     val description = "sunny"
                                     val mangaUrl = manga.mangaUrl
+                                    val source = manga.source
 
                                     Box(modifier = Modifier
                                         //.fillMaxWidth(0.5f)
@@ -107,7 +108,7 @@ fun HomePage(
                                             contentDescription = "devil",
                                             title = title,
                                             onClick = {
-                                                navController.navigate(route = MangaUrl(mangaUrl))
+                                                navController.navigate(route = MangaUrl(mangaUrl,source))
                                             }
                                         )
                                     }

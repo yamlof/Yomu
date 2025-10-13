@@ -48,6 +48,7 @@ fun MangaInformation(
     status: String?,
     cover: String?,
     url: String?,
+    source:String?,
     modifier: Modifier = Modifier
 ) {
 
@@ -60,11 +61,14 @@ fun MangaInformation(
         Text(title ?: "Loading...", style = MaterialTheme.typography.titleMedium)
         Text(author ?: "Unknown", style = MaterialTheme.typography.bodyMedium)
         Text(status ?: "Unknown", style = MaterialTheme.typography.bodyMedium)
+        Text(source ?: "Unknown", style = MaterialTheme.typography.bodyMedium)
+
 
         val newManga = MangaEntity(
             name = title.toString(),
             cover = cover.toString(),
-            mangaUrl = url.toString()
+            mangaUrl = url.toString(),
+            source = source.toString()
         )
 
         val library =  viewModel.allMangas.collectAsState()
@@ -112,7 +116,8 @@ fun MangaCover(
 fun ItemDetail(
     viewModel: MangaViewModel,
     mangaUrl: String?,
-    navController: NavController
+    navController: NavController,
+    source: String
 ){
     val itemsList = remember { mutableStateOf<List<LatestManga>>(emptyList()) }
 
@@ -125,7 +130,7 @@ fun ItemDetail(
         val fetchedChapters = remember {mutableStateOf<List<Chapter>>(emptyList()) }
 
         LaunchedEffect(Unit) {
-            val fetchedItems = ApiClient.getMangaInfo(mangaUrl.toString())
+            val fetchedItems = ApiClient.getMangaInfo(mangaUrl.toString(),source)
            // Log.d("MangaNelo", "Fetched items: $fetchedItems")
             fetcheditem.value = fetchedItems.cover
             fetchedTitle.value = fetchedItems.title
@@ -177,7 +182,8 @@ fun ItemDetail(
                             author = fetchedAuthor.value,
                             status = fetchedStatus.value,
                             cover = fetcheditem.value,
-                            url = mangaUrl
+                            url = mangaUrl,
+                            source
                         )
                     }
                 } else {
@@ -210,6 +216,7 @@ fun ItemDetail(
                             status = fetchedStatus.value,
                             cover = fetcheditem.value,
                             url = mangaUrl,
+                            source,
                             modifier = Modifier.weight(1f)
                         )
                     }

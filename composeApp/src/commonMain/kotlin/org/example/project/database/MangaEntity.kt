@@ -8,6 +8,7 @@ import androidx.room.PrimaryKey
 data class MangaEntity(
     @PrimaryKey val name : String,
     val cover : String,
-    val mangaUrl : String
+    val mangaUrl : String,
+    val source : String
 )
 

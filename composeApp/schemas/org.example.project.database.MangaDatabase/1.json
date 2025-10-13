@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "23376726aa5ff3186371dafe98e4c6b1",
+    "identityHash": "597258279c79c6b8f6b2f61b5bd8e8cb",
     "entities": [
       {
         "tableName": "mangas",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`name` TEXT NOT NULL, `cover` TEXT NOT NULL, `mangaUrl` TEXT NOT NULL, PRIMARY KEY(`name`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`name` TEXT NOT NULL, `cover` TEXT NOT NULL, `mangaUrl` TEXT NOT NULL, `source` TEXT NOT NULL, PRIMARY KEY(`name`))",
         "fields": [
           {
             "fieldPath": "name",
@@ -23,6 +23,12 @@
           {
             "fieldPath": "mangaUrl",
             "columnName": "mangaUrl",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "source",
+            "columnName": "source",
             "affinity": "TEXT",
             "notNull": true
           }
@@ -48,7 +54,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '23376726aa5ff3186371dafe98e4c6b1')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '597258279c79c6b8f6b2f61b5bd8e8cb')"
     ]
   }
 }

@@ -24,16 +24,21 @@ object ApiClient {
     suspend fun getHelloMessage(): String =
         client.get("${baseUrl}hello").body()
 
-    suspend fun getLatest(): List<LatestManga> =
-        client.get("${testUrl}latest").body()
+    suspend fun getLatest(source: String): List<LatestManga> =
+        client.get("${testUrl}latest"){
+            parameter("source",source)
+        }.body()
 
 
-    suspend fun getPopular(): List<LatestManga> =
-        client.get("${baseUrl}popular").body()
+    suspend fun getPopular(source: String): List<LatestManga> =
+        client.get("${testUrl}popular"){
+            parameter("source",source)
+        }.body()
 
-    suspend fun getMangaInfo(url: String): MangaInfo =
+    suspend fun getMangaInfo(url: String,source: String): MangaInfo =
         client.get("${testUrl}manga_info") {
             parameter("mangaInfo", url)
+            parameter("source",source)
         }.body()
 
     suspend fun getChapterInfo(url: String): List<ImageManga> =
@@ -41,9 +46,9 @@ object ApiClient {
             parameter("chapterUrl", url)
         }.body()
 
-    suspend fun getSearchInfo(query: String): List<LatestManga> =
-        client.get("${baseUrl}search") {
+    suspend fun getSearchInfo(query: String,source: String): List<LatestManga> =
+        client.get("${testUrl}search") {
             parameter("mangaString", query)
+            parameter("source",source)
         }.body()
-
 }

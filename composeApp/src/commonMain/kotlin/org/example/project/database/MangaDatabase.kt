@@ -8,7 +8,7 @@ import androidx.sqlite.driver.bundled.BundledSQLiteDriver
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 
-@Database(entities = [MangaEntity::class], version = 1)
+@Database(entities = [MangaEntity::class], version = 2)
 @ConstructedBy(AppDatabaseConstructor::class)
 abstract class MangaDatabase : RoomDatabase() {
     abstract fun getDao(): MangaDao
@@ -25,5 +25,6 @@ fun getRoomDatabase(
     return builder
         .setDriver(BundledSQLiteDriver())
         .setQueryCoroutineContext(Dispatchers.IO)
+        .fallbackToDestructiveMigration(true)
         .build()
 }

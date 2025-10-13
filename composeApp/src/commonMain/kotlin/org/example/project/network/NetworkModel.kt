@@ -21,7 +21,7 @@ data class MangaInfo(
 
 @Serializable
 data class Chapter(
-    val id : Int,
+    val id : Int? = null,
     val number : String? ,
     val title:String,
     val url:String,

@@ -20,12 +20,12 @@ class SearchView: ViewModel() {
 
     val errorMessage = mutableStateOf<String?>(null)
 
-    fun fetchMangasSearch(query: String) {
+    fun fetchMangasSearch(query: String,source: String) {
         isLoading.value = true
         errorMessage.value = null
         viewModelScope.launch {
             try {
-                val newMangas = apiService.getSearchInfo(query)
+                val newMangas = apiService.getSearchInfo(query, source )
                 mangas.value = newMangas
             } catch (e: Exception) {
                 errorMessage.value = "error: ${e.message}"
@@ -35,12 +35,12 @@ class SearchView: ViewModel() {
         }
     }
 
-    fun fetchPopular() {
+    fun fetchPopular(source: String) {
         isLoading.value = true
         errorMessage.value = null
         viewModelScope.launch {
             try {
-                val newMangas = apiService.getPopular()
+                val newMangas = apiService.getPopular(source)
                 mangas.value = newMangas
             } catch (e: Exception) {
                 errorMessage.value = "error: ${e.message}"
@@ -50,12 +50,12 @@ class SearchView: ViewModel() {
         }
     }
 
-    fun fetchLatest(){
+    fun fetchLatest(source:String){
         isLoading.value = true
         errorMessage.value = null
         viewModelScope.launch {
             try {
-                val newMangas = apiService.getLatest()
+                val newMangas = apiService.getLatest(source)
                 mangas.value = newMangas
             } catch (e: Exception) {
                 errorMessage.value = "error: ${e.message}"

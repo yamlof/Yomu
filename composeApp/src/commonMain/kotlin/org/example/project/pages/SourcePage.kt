@@ -2,8 +2,10 @@ package org.example.project.pages
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -49,13 +51,13 @@ enum class CupcakeScreen(val title: StringResource) {
 }*/
 
 @Serializable
-data class MangaUrl (val url: String)
+data class MangaUrl (val url: String,val source: String)
 
 @Serializable
 data class ChapterUrl (val url : String)
 
 @Serializable
-data class SourceNavigation(val url: String = "MangaBat")
+data class SourceNavigation(val url: String)
 
 @Composable
 fun SourcePage(
@@ -64,28 +66,55 @@ fun SourcePage(
     navController : NavController
 ){
 
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .clickable {
-                navController.navigate(SourceNavigation("MangaBat"))
-            }
-            .padding(16.dp),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-
-        Text( text = "01" )
-
-        AsyncImage(
-            model = "https://www.mangabats.com/images/favicon-bat.webp",
-            contentDescription = "",
+    Column {
+        Row(
             modifier = Modifier
-                .padding(horizontal = 25.dp)
-                .height(25.dp)
-                .width(25.dp)
-        )
-        Text("MANGABAT")
+                .fillMaxWidth()
+                .clickable {
+                    navController.navigate(SourceNavigation("mangabat"))
+                }
+                .padding(16.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+
+            Text( text = "01" )
+
+            AsyncImage(
+                model = "https://www.mangabats.com/images/favicon-bat.webp",
+                contentDescription = "",
+                modifier = Modifier
+                    .padding(horizontal = 25.dp)
+                    .height(25.dp)
+                    .width(25.dp)
+            )
+            Text("MANGABAT")
+        }
+
+        Row (
+            modifier = Modifier
+                .fillMaxWidth()
+                .clickable{
+                    navController.navigate(SourceNavigation("mangafire"))
+                }
+                .padding(16.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ){
+            Text(text = "02")
+
+            AsyncImage(
+                model = "https://s.mfcdn.cc/assets/sites/mangafire/favicon.png?v3",
+                contentDescription = "",
+                modifier = Modifier
+                    .padding(horizontal = 25.dp)
+                    .height(25.dp)
+                    .width(25.dp)
+            )
+
+            Text("MANGAFIRE")
+        }
     }
+
+
 
 
 }

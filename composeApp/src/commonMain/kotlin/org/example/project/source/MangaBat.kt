@@ -74,7 +74,7 @@ import org.koin.compose.viewmodel.koinViewModel
 
 
 @Composable
-fun StyledTextField(viewModel: SearchView) {
+fun StyledTextField(viewModel: SearchView,source: String) {
 
     var value by remember { mutableStateOf("") }
 
@@ -96,7 +96,7 @@ fun StyledTextField(viewModel: SearchView) {
         keyboardActions = KeyboardActions(
             onDone = {
                 if (value.isNotBlank()) {
-                    viewModel.fetchMangasSearch(value)
+                    viewModel.fetchMangasSearch(value,source)
                 }
                 //LocalSoftwareKeyboardController.current?.hide()
             }
@@ -106,7 +106,7 @@ fun StyledTextField(viewModel: SearchView) {
 
 @Composable
 fun ImageCard(
-    model: Any, // URL or resource
+    model: Any,
     contentDescription: String?,
     title: String,
     modifier: Modifier = Modifier,
@@ -179,7 +179,7 @@ fun MangaBat(
     val mangas = remember { viewModel.mangas}
 
     LaunchedEffect(Unit) {
-        viewModel.fetchLatest()
+        viewModel.fetchLatest(source)
     }
 
     Column {
@@ -209,17 +209,17 @@ fun MangaBat(
                         modifier = Modifier
                             .padding(top = 40.dp)
                         ,
-                        text = "MANGABAT"
+                        text = source.uppercase()
                     )
 
-                    StyledTextField(viewModel)
+                    StyledTextField(viewModel,source)
 
                 }
 
                 Row {
                     ElevatedCard(
                         onClick = {
-                            viewModel.fetchPopular()
+                            viewModel.fetchPopular(source)
                         }
                     ){
                         Text("Popular Manga")
@@ -227,7 +227,7 @@ fun MangaBat(
 
                     ElevatedCard (
                         onClick = {
-                            viewModel.fetchLatest()
+                            viewModel.fetchLatest(source)
                         }
                     ){
                         Text("Latest Manga")
@@ -276,14 +276,12 @@ fun MangaBat(
                             contentDescription = "devil",
                             title = title,
                             onClick = {
-                                navController.navigate(route = MangaUrl(mangaUrl))
+                                navController.navigate(route = MangaUrl(mangaUrl,source = source))
                             }
                         )
                     }
                 }
             }
         }
-
-
     }
 }

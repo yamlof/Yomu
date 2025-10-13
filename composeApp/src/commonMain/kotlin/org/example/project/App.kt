@@ -54,6 +54,8 @@ import org.koin.core.KoinApplication
 @Preview
 fun App() {
 
+
+
     MaterialTheme (
         typography = jetBrainsMonoTypography()
     ){
@@ -158,7 +160,7 @@ fun App() {
                         }
                         composable<MangaUrl> {
                             val mangaUrl: MangaUrl = it.toRoute()
-                            ItemDetail(viewModel, mangaUrl.url, navController)
+                            ItemDetail(viewModel, mangaUrl.url, navController, source = mangaUrl.source)
                         }
                         composable<ChapterUrl> {
                             val chapterUrl: ChapterUrl = it.toRoute()
