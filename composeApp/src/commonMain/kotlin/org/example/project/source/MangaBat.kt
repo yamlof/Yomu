@@ -147,6 +147,37 @@ fun ImageCard(
     }
 }
 
+val sourceHeaders = mapOf(
+    "mangafire" to mapOf(
+        "User-Agent" to "Mozilla/5.0 (X11; Linux x86_64; rv:131.0) Gecko/20100101 Firefox/131.0",
+        "Accept" to "image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8",
+        "Accept-Language" to "en-GB,en;q=0.6",
+        "Connection" to "keep-alive",
+        "Referer" to "https://www.mangafire.to/",
+        "Sec-Fetch-Dest" to "image",
+        "Sec-Fetch-Mode" to "no-cors",
+        "Sec-Fetch-Site" to "cross-site",
+        "Sec-Fetch-Storage-Access" to "none",
+        "Sec-GPC" to "1",
+        "Pragma" to "no-cache",
+        "Cache-Control" to "no-cache"
+    ),
+    "mangabat" to mapOf(
+        "User-Agent" to "Mozilla/5.0 (X11; Linux x86_64; rv:131.0) Gecko/20100101 Firefox/131.0",
+        "Accept" to "image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8",
+        "Accept-Language" to "en-GB,en;q=0.6",
+        "Connection" to "keep-alive",
+        "Referer" to "https://www.mangabats.com/",
+        "Sec-Fetch-Dest" to "image",
+        "Sec-Fetch-Mode" to "no-cors",
+        "Sec-Fetch-Site" to "cross-site",
+        "Sec-Fetch-Storage-Access" to "none",
+        "Sec-GPC" to "1",
+        "Pragma" to "no-cache",
+        "Cache-Control" to "no-cache"
+    )
+)
+
 
 val headers = NetworkHeaders.Builder()
     .set("User-Agent", "Mozilla/5.0 (X11; Linux x86_64; rv:131.0) Gecko/20100101 Firefox/131.0")

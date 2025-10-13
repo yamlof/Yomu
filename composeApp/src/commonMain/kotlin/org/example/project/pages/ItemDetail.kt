@@ -241,7 +241,7 @@ fun ItemDetail(
                         .fillMaxWidth()
                         .height(60.dp)
                         .clickable {
-                            navController.navigate(route = ChapterUrl(chapterLink))
+                            navController.navigate(route = ChapterUrl(chapterLink,source))
                         },
                     shape = RectangleShape,
                     colors = CardDefaults.cardColors(Color(0xFFA4C2D7)),

@@ -164,7 +164,7 @@ fun App() {
                         }
                         composable<ChapterUrl> {
                             val chapterUrl: ChapterUrl = it.toRoute()
-                            ChapterReader(modifier = Modifier,chapterUrl.url, navController)
+                            ChapterReader(modifier = Modifier,chapterUrl.url, navController,chapterUrl.source)
                         }
                     }
 

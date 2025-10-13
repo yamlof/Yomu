@@ -41,9 +41,10 @@ object ApiClient {
             parameter("source",source)
         }.body()
 
-    suspend fun getChapterInfo(url: String): List<ImageManga> =
+    suspend fun getChapterInfo(url: String,source: String): List<ImageManga> =
         client.get("${testUrl}chapter") {
             parameter("chapterUrl", url)
+            parameter("source",source)
         }.body()
 
     suspend fun getSearchInfo(query: String,source: String): List<LatestManga> =

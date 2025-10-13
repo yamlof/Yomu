@@ -344,7 +344,7 @@ fun WebtoonImage(
                 }*/
 
                 defaultRequest {
-                    header("User-Agent", "Mozilla/5.0 (X11; Linux x86_64; rv:131.0) Gecko/20100101 Firefox/131.0")
+                    header("User-Agent" , "Mozilla/5.0 (X11; Linux x86_64; rv:131.0) Gecko/20100101 Firefox/131.0")
                     header("Accept", "image/avif,image/webp,image/png,image/svg+xml,image/*;q=0.8,*/*;q=0.5")
                     header("Accept-Language", "en-GB,en;q=0.5")
                     header("Connection", "keep-alive")
@@ -484,7 +484,8 @@ fun WebtoonImage(
 fun ChapterReader(
     modifier: Modifier = Modifier,
     chapterUrl: String,
-    navController: NavController
+    navController: NavController,
+    source:String
 ){
 
     var isUIVisible = remember { mutableStateOf(false) }
@@ -501,7 +502,7 @@ fun ChapterReader(
 
     LaunchedEffect(Unit) {
         try {
-            val fetchedItems = ApiClient.getChapterInfo(chapterUrl)
+            val fetchedItems = ApiClient.getChapterInfo(chapterUrl, source = source)
             fetchedItem.value = fetchedItems
             fetchedImages.value = fetchedItems
             isLoading.value = false

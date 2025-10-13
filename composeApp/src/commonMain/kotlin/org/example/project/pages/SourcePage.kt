@@ -54,7 +54,7 @@ enum class CupcakeScreen(val title: StringResource) {
 data class MangaUrl (val url: String,val source: String)
 
 @Serializable
-data class ChapterUrl (val url : String)
+data class ChapterUrl (val url : String,val source: String)
 
 @Serializable
 data class SourceNavigation(val url: String)
