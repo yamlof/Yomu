@@ -16,6 +16,7 @@ foundation = "1.9.0"
 imageLoader = "1.10.0"
 jetbrainsKotlinxSerializationJson = "1.6.0"
 junit = "4.13.2"
+koinAndroid = "4.1"
 koinAndroidxComposeViewmodelNavigation = "4.1.1"
 kotlin = "2.2.20"
 kotlinx-coroutines = "1.10.2"
@@ -39,6 +40,7 @@ ktor = "3.3.0"
 coil-network-ktor3 = { module = "io.coil-kt.coil3:coil-network-ktor3", version.ref = "coilNetworkKtor3" }
 foundation = { module = "org.jetbrains.compose.foundation:foundation", version.ref = "foundation" }
 image-loader = { module = "io.github.qdsfdhvh:image-loader", version.ref = "imageLoader" }
+koin-android = { module = "io.insert-koin:koin-android", version.ref = "koinAndroid" }
 koin-androidx-compose-viewmodel = { module = "io.insert-koin:koin-androidx-compose-viewmodel", version.ref = "koinAndroidxComposeViewmodelNavigation" }
 koin-androidx-compose-viewmodel-navigation = { module = "io.insert-koin:koin-androidx-compose-viewmodel-navigation", version.ref = "koinAndroidxComposeViewmodelNavigation" }
 koin-core = { module = "io.insert-koin:koin-core", version.ref = "koinAndroidxComposeViewmodelNavigation" }

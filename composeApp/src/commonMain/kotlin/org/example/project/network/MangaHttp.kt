@@ -19,7 +19,7 @@ object ApiClient {
     }
 
     private const val baseUrl = "https://manga-sp-faecffgcasbjgdcp.switzerlandnorth-01.azurewebsites.net/manga/"
-    private const val testUrl = "http://10.24.72.29:5000/manga/"
+    private const val testUrl = "http://127.0.0.1:5000/manga/"
 
     suspend fun getHelloMessage(): String =
         client.get("${baseUrl}hello").body()

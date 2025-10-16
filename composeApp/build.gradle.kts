@@ -46,6 +46,10 @@ kotlin {
             implementation(libs.androidx.activity.compose)
             implementation(libs.ktor.client.android)
             implementation(libs.androidx.room.sqlite.wrapper)
+            implementation("androidx.datastore:datastore-preferences:1.1.7")
+            val koin_android_version = "4.1"
+            implementation(libs.koin.android)
+
             //implementation(libs.ktor.client.okhttp)
 
         }
